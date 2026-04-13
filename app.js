@@ -593,7 +593,8 @@
 
     const reviewJumpHtml = result.items
       .map((item, index) => {
-        const classes = ["review-jump", index === result.reviewIndex ? "is-current" : ""].filter(Boolean).join(" ");
+        const status = !item.chosenAnswer ? "is-unanswered" : item.isCorrect ? "is-right" : "is-wrong";
+        const classes = ["review-jump", status, index === result.reviewIndex ? "is-current" : ""].filter(Boolean).join(" ");
         return `
           <button class="${classes}" data-action="review-jump" data-index="${index}">
             ${index + 1}
