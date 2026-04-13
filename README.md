@@ -36,4 +36,7 @@ Open `mock_test/index.html` directly in a browser, or host the `mock_test/` dire
 - Questions are unique within a paper
 - Option order is shuffled per session
 - Session recovery uses `localStorage` with an absolute end timestamp
-- Cheatsheets are separate from the live test flow
+- Completed-paper review history is saved in browser `localStorage`
+- Saved history is browser-local on that device, not a shared multi-user account system
+- Cheatsheets can be opened during a live paper, but the timer does not pause
+- The current review page can be reopened after switching to cheatsheets

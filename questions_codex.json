@@ -1,0 +1,392 @@
+[
+  {
+    "id": "Q001",
+    "module": "01_introductory_maths",
+    "question": "Solve the quadratic equation x^2 - 5x + 6 = 0.",
+    "options": [
+      "x = 1 and x = 6",
+      "x = 2 and x = 3",
+      "x = -2 and x = -3",
+      "x = 0 and x = 6"
+    ],
+    "answer": "x = 2 and x = 3",
+    "explanation": "The quadratic factorises as (x-2)(x-3) = 0, so the roots are 2 and 3."
+  },
+  {
+    "id": "Q002",
+    "module": "01_introductory_maths",
+    "question": "Which measure of central tendency is generally most robust to extreme outliers?",
+    "options": [
+      "Mean",
+      "Median",
+      "Mode",
+      "Range"
+    ],
+    "answer": "Median",
+    "explanation": "The median depends on the middle position in the sorted data, so extreme values affect it less than the mean."
+  },
+  {
+    "id": "Q003",
+    "module": "02_intro_programming",
+    "question": "What is the main purpose of source control such as Git?",
+    "options": [
+      "To track changes and support collaboration",
+      "To prevent all other developers from viewing the code",
+      "To compile Python code into machine code",
+      "To replace testing and debugging"
+    ],
+    "answer": "To track changes and support collaboration",
+    "explanation": "Version control records changes over time and helps multiple developers work on the same project safely."
+  },
+  {
+    "id": "Q004",
+    "module": "02_intro_programming",
+    "question": "Which Python collection type stores unique values only?",
+    "options": [
+      "list",
+      "tuple",
+      "set",
+      "dict"
+    ],
+    "answer": "set",
+    "explanation": "A set does not allow duplicate elements and is useful for membership tests and de-duplication."
+  },
+  {
+    "id": "Q005",
+    "module": "03_foundations_data_science",
+    "question": "In the six-phase data science lifecycle used in the module, which phase is primarily about explaining findings and value to stakeholders?",
+    "options": [
+      "Data Preparation",
+      "Model Building",
+      "Communicate Results",
+      "Operationalize"
+    ],
+    "answer": "Communicate Results",
+    "explanation": "That phase focuses on presenting findings, value, and limitations to stakeholders."
+  },
+  {
+    "id": "Q006",
+    "module": "03_foundations_data_science",
+    "question": "Which learning type uses known labels during training?",
+    "options": [
+      "Supervised learning",
+      "Unsupervised learning",
+      "Association rule mining",
+      "Clustering"
+    ],
+    "answer": "Supervised learning",
+    "explanation": "Supervised learning trains on labelled examples, unlike unsupervised methods such as clustering."
+  },
+  {
+    "id": "Q007",
+    "module": "03_foundations_data_science",
+    "question": "In association-rule mining, what does a lift value greater than 1 usually indicate?",
+    "options": [
+      "The rule is impossible",
+      "The items are negatively associated",
+      "The relationship is stronger than chance",
+      "The antecedent and consequent are independent"
+    ],
+    "answer": "The relationship is stronger than chance",
+    "explanation": "Lift above 1 suggests a positive association beyond what would be expected if the items were independent."
+  },
+  {
+    "id": "Q008",
+    "module": "05_systems_analysis_design",
+    "question": "In a use case diagram, which relationship is used when one use case always reuses mandatory behavior from another?",
+    "options": [
+      "extend",
+      "include",
+      "inheritance",
+      "aggregation"
+    ],
+    "answer": "include",
+    "explanation": "The include relationship represents required shared behavior that is always invoked."
+  },
+  {
+    "id": "Q009",
+    "module": "05_systems_analysis_design",
+    "question": "Which statement best describes SQL in this module?",
+    "options": [
+      "A declarative language for querying and manipulating data",
+      "A graphics language for user interfaces",
+      "A version-control system for databases",
+      "A machine-learning algorithm for classification"
+    ],
+    "answer": "A declarative language for querying and manipulating data",
+    "explanation": "SQL specifies what data is required rather than programming each step procedurally."
+  },
+  {
+    "id": "Q010",
+    "module": "06_lsep_data_science",
+    "question": "What does LSEP stand for in this module?",
+    "options": [
+      "Legal, Social, Ethical, and Professional",
+      "Logical, Statistical, Experimental, and Practical",
+      "Legal, Secure, Economic, and Personal",
+      "Learning, Security, Ethics, and Performance"
+    ],
+    "answer": "Legal, Social, Ethical, and Professional",
+    "explanation": "The module uses LSEP to group the main non-technical responsibilities and issues in data science."
+  },
+  {
+    "id": "Q011",
+    "module": "06_lsep_data_science",
+    "question": "Which GDPR/DPA principle means you should collect only the personal data that is actually necessary?",
+    "options": [
+      "Accuracy",
+      "Data minimisation",
+      "Storage limitation",
+      "Integrity"
+    ],
+    "answer": "Data minimisation",
+    "explanation": "Data minimisation requires limiting collection to what is needed for the stated purpose."
+  },
+  {
+    "id": "Q012",
+    "module": "07_advanced_systems_programming",
+    "question": "Which combination is generally preferred in good software design?",
+    "options": [
+      "Low cohesion and high coupling",
+      "High cohesion and low coupling",
+      "High cohesion and high coupling",
+      "Low cohesion and low coupling"
+    ],
+    "answer": "High cohesion and low coupling",
+    "explanation": "Good designs keep each component focused internally while reducing unnecessary dependence between components."
+  },
+  {
+    "id": "Q013",
+    "module": "08_interpreting_data",
+    "question": "In hypothesis testing, what is the standard decision when p <= alpha?",
+    "options": [
+      "Reject H0",
+      "Accept H0 as true",
+      "Increase the sample mean",
+      "Switch automatically to a nonparametric test"
+    ],
+    "answer": "Reject H0",
+    "explanation": "If the p-value is less than or equal to the significance level, there is enough evidence to reject the null hypothesis."
+  },
+  {
+    "id": "Q014",
+    "module": "08_interpreting_data",
+    "question": "Which test is typically used to compare the means of the same subjects measured twice?",
+    "options": [
+      "Two-sample independent t-test",
+      "Paired t-test",
+      "Chi-squared test",
+      "One-way ANOVA"
+    ],
+    "answer": "Paired t-test",
+    "explanation": "A paired t-test is for matched pairs or before-and-after measurements on the same subjects."
+  },
+  {
+    "id": "Q015",
+    "module": "08_interpreting_data",
+    "question": "Which plot is usually best for showing the relationship between two numeric variables?",
+    "options": [
+      "Histogram",
+      "Box plot",
+      "Scatter plot",
+      "Pie chart"
+    ],
+    "answer": "Scatter plot",
+    "explanation": "Scatter plots are used to examine patterns, correlation, and outliers between two numeric variables."
+  },
+  {
+    "id": "Q016",
+    "module": "09_project_management",
+    "question": "Which document formally authorises a project?",
+    "options": [
+      "WBS dictionary",
+      "Project charter",
+      "Risk register",
+      "Issue log"
+    ],
+    "answer": "Project charter",
+    "explanation": "The project charter is the formal authorisation that recognises and starts the project."
+  },
+  {
+    "id": "Q017",
+    "module": "09_project_management",
+    "question": "What is the main purpose of a Work Breakdown Structure (WBS)?",
+    "options": [
+      "To estimate only the project budget",
+      "To record only project risks",
+      "To break all project work into manageable pieces",
+      "To replace the project schedule completely"
+    ],
+    "answer": "To break all project work into manageable pieces",
+    "explanation": "A WBS is a hierarchical decomposition of all project work and supports planning, scheduling, and control."
+  },
+  {
+    "id": "Q018",
+    "module": "10_machine_learning",
+    "question": "In CRISP-DM, which phase focuses on cleaning, transforming, and preparing data for modelling?",
+    "options": [
+      "Business understanding",
+      "Data preparation",
+      "Evaluation",
+      "Deployment"
+    ],
+    "answer": "Data preparation",
+    "explanation": "The data preparation phase turns raw data into a form suitable for modelling."
+  },
+  {
+    "id": "Q019",
+    "module": "10_machine_learning",
+    "question": "Why is feature scaling especially important for k-nearest neighbours (KNN)?",
+    "options": [
+      "Because KNN can only work on categorical data",
+      "Because KNN chooses splits using information gain",
+      "Because large-scale features can dominate distance calculations",
+      "Because scaling automatically prevents overfitting"
+    ],
+    "answer": "Because large-scale features can dominate distance calculations",
+    "explanation": "KNN is distance-based, so variables with much larger numeric ranges can outweigh others unless scaled."
+  },
+  {
+    "id": "Q020",
+    "module": "10_machine_learning",
+    "question": "Which metric is commonly used to evaluate a classification model rather than a regression model?",
+    "options": [
+      "AUC",
+      "RMSE",
+      "MAE",
+      "Mean squared deviation from the sample median"
+    ],
+    "answer": "AUC",
+    "explanation": "AUC is a classification metric, while RMSE and MAE are standard regression-error measures."
+  },
+  {
+    "id": "Q021",
+    "module": "11_information_security",
+    "question": "In the CIA triad, what does confidentiality mean?",
+    "options": [
+      "Information is always publicly available",
+      "Information is not disclosed to unauthorised parties",
+      "Information is processed as quickly as possible",
+      "Information is never changed by authorised users"
+    ],
+    "answer": "Information is not disclosed to unauthorised parties",
+    "explanation": "Confidentiality is about preventing unauthorised disclosure of information."
+  },
+  {
+    "id": "Q022",
+    "module": "11_information_security",
+    "question": "Which term means a weakness that makes it easier for a threat to succeed?",
+    "options": [
+      "Asset",
+      "Threat",
+      "Vulnerability",
+      "Control"
+    ],
+    "answer": "Vulnerability",
+    "explanation": "A vulnerability is a weakness; a threat is the potential cause of harm that might exploit it."
+  },
+  {
+    "id": "Q023",
+    "module": "11_information_security",
+    "question": "Authentication is best described as:",
+    "options": [
+      "Deciding what a user is allowed to do",
+      "Proving who someone is",
+      "Encrypting all stored data",
+      "Removing all security risks"
+    ],
+    "answer": "Proving who someone is",
+    "explanation": "Authentication verifies identity, whereas authorisation determines permissions."
+  },
+  {
+    "id": "Q024",
+    "module": "12_scalable_systems_databases",
+    "question": "Which Hadoop ecosystem component is primarily responsible for cluster resource management?",
+    "options": [
+      "MapReduce",
+      "YARN",
+      "Hive",
+      "Sqoop"
+    ],
+    "answer": "YARN",
+    "explanation": "YARN is the resource-management layer that allocates cluster resources to applications."
+  },
+  {
+    "id": "Q025",
+    "module": "12_scalable_systems_databases",
+    "question": "Which statement about the Secondary NameNode is correct?",
+    "options": [
+      "It is the main Hadoop query engine",
+      "It is a hot standby that automatically replaces the NameNode",
+      "It helps with checkpointing but is not a backup NameNode",
+      "It stores all HDFS data blocks permanently"
+    ],
+    "answer": "It helps with checkpointing but is not a backup NameNode",
+    "explanation": "The Secondary NameNode assists with metadata checkpointing; it is not a failover replacement."
+  },
+  {
+    "id": "Q026",
+    "module": "12_scalable_systems_databases",
+    "question": "Which Hadoop ecosystem tool is used for bulk transfer between relational databases and Hadoop systems such as HDFS or Hive?",
+    "options": [
+      "Flume",
+      "Sqoop",
+      "ZooKeeper",
+      "Oozie"
+    ],
+    "answer": "Sqoop",
+    "explanation": "Sqoop is designed for structured bulk import/export between RDBMS platforms and Hadoop storage layers."
+  },
+  {
+    "id": "Q027",
+    "module": "13_ai_for_data_science",
+    "question": "In AI, what does PEAS stand for?",
+    "options": [
+      "Performance measure, Environment, Actuators, Sensors",
+      "Planning, Evaluation, Algorithms, Search",
+      "Prediction, Explanation, Accuracy, Safety",
+      "Process, Events, Actions, States"
+    ],
+    "answer": "Performance measure, Environment, Actuators, Sensors",
+    "explanation": "PEAS is the standard framework for specifying a rational agent's task environment."
+  },
+  {
+    "id": "Q028",
+    "module": "13_ai_for_data_science",
+    "question": "Which evaluation function is used by A* search?",
+    "options": [
+      "f(n) = h(n)",
+      "f(n) = g(n)",
+      "f(n) = g(n) + h(n)",
+      "f(n) = g(n) - h(n)"
+    ],
+    "answer": "f(n) = g(n) + h(n)",
+    "explanation": "A* combines the known path cost so far, g(n), with a heuristic estimate of remaining cost, h(n)."
+  },
+  {
+    "id": "Q029",
+    "module": "14_project_planning",
+    "question": "According to the module, a strong business problem statement should include which three elements?",
+    "options": [
+      "Current state description, business objective, success criteria",
+      "Source code, unit tests, deployment plan",
+      "Stakeholder names, meeting schedule, budget spreadsheet",
+      "Only the current problem and nothing else"
+    ],
+    "answer": "Current state description, business objective, success criteria",
+    "explanation": "The slides define the business problem statement around the current state, the desired objective, and measurable success criteria."
+  },
+  {
+    "id": "Q030",
+    "module": "14_project_planning",
+    "question": "In SMART objectives, what does the 'T' stand for?",
+    "options": [
+      "Tested",
+      "Technical",
+      "Transparent",
+      "Time-bound"
+    ],
+    "answer": "Time-bound",
+    "explanation": "SMART objectives should be Specific, Measurable, Achievable, Relevant, and Time-bound."
+  }
+]

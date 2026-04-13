@@ -1948,5 +1948,1981 @@ window.QUESTION_BANK = [
     ],
     "answer": "Functional requirements describe behaviour or services, while non-functional requirements describe qualities or constraints",
     "explanation": "Functional requirements say what the system should do; non-functional requirements say how well or under what constraints it should operate."
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "What is log2(8) equal to?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "8"
+    ],
+    "answer": "3",
+    "explanation": "log2(8) = 3 because 2^3 = 8.",
+    "id": "Q151"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "Using the log product rule, log(a) + log(b) equals:",
+    "options": [
+      "log(a+b)",
+      "log(a/b)",
+      "log(ab)",
+      "log(a) x log(b)"
+    ],
+    "answer": "log(ab)",
+    "explanation": "The product rule says log(a) + log(b) = log(ab).",
+    "id": "Q152"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "Using the log quotient rule, log(a/b) equals:",
+    "options": [
+      "log(a) x log(b)",
+      "log(a) - log(b)",
+      "log(a) + log(b)",
+      "log(a - b)"
+    ],
+    "answer": "log(a) - log(b)",
+    "explanation": "The quotient rule says log(a/b) = log(a) - log(b).",
+    "id": "Q153"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "In a right-angled triangle, if the two shorter sides are 6 and 8, what is the hypotenuse?",
+    "options": [
+      "10",
+      "12",
+      "14",
+      "sqrt(48)"
+    ],
+    "answer": "10",
+    "explanation": "By Pythagoras, sqrt(6^2 + 8^2) = sqrt(36 + 64) = 10.",
+    "id": "Q154"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "A right-angled triangle has sides 5 and 12. What is the hypotenuse?",
+    "options": [
+      "12",
+      "13",
+      "17",
+      "sqrt(119)"
+    ],
+    "answer": "13",
+    "explanation": "By Pythagoras, sqrt(5^2 + 12^2) = sqrt(25 + 144) = 13.",
+    "id": "Q155"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "Which measure describes the spread of the middle 50% of a dataset?",
+    "options": [
+      "Range",
+      "Variance",
+      "Standard deviation",
+      "IQR"
+    ],
+    "answer": "IQR",
+    "explanation": "The interquartile range measures the spread of the middle 50% of a dataset, from Q1 to Q3.",
+    "id": "Q156"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "What does a correlation coefficient of 0 indicate?",
+    "options": [
+      "Perfect positive relationship",
+      "Perfect negative relationship",
+      "No linear relationship",
+      "The variables are identical"
+    ],
+    "answer": "No linear relationship",
+    "explanation": "A correlation of 0 means there is no linear relationship between the two variables.",
+    "id": "Q157"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "For the linear function f(x) = 3x + 5, what is the y-intercept?",
+    "options": [
+      "3",
+      "5",
+      "-5",
+      "0"
+    ],
+    "answer": "5",
+    "explanation": "In y = mx + c form, the constant term c is the y-intercept, so the intercept is 5.",
+    "id": "Q158"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "Which trig ratio equals opposite over hypotenuse?",
+    "options": [
+      "cos",
+      "tan",
+      "sin",
+      "cot"
+    ],
+    "answer": "sin",
+    "explanation": "In SOH-CAH-TOA, sine is opposite divided by hypotenuse.",
+    "id": "Q159"
+  },
+  {
+    "module": "01_introductory_maths",
+    "question": "Solve 9x + 3 = -2.",
+    "options": [
+      "x = 5/9",
+      "x = -5/9",
+      "x = -1/3",
+      "x = -9/5"
+    ],
+    "answer": "x = -5/9",
+    "explanation": "Subtract 3 from both sides to get 9x = -5, then divide by 9 to get x = -5/9.",
+    "id": "Q160"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which Python data type would you use for True/False values?",
+    "options": [
+      "int",
+      "str",
+      "bool",
+      "None"
+    ],
+    "answer": "bool",
+    "explanation": "Python uses the bool type for True/False values.",
+    "id": "Q161"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which Python value represents the absence of a value?",
+    "options": [
+      "0",
+      "\"\"",
+      "False",
+      "None"
+    ],
+    "answer": "None",
+    "explanation": "None is Python's special value for the absence of a value or result.",
+    "id": "Q162"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "What Python keyword is used to define a function?",
+    "options": [
+      "func",
+      "def",
+      "function",
+      "lambda"
+    ],
+    "answer": "def",
+    "explanation": "In Python, functions are declared with the def keyword.",
+    "id": "Q163"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which Git command uploads local commits to a remote repository?",
+    "options": [
+      "git pull",
+      "git commit",
+      "git push",
+      "git merge"
+    ],
+    "answer": "git push",
+    "explanation": "git push sends local commits to the configured remote repository.",
+    "id": "Q164"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which sorting algorithm has worst-case O(n^2) but best-case O(n)?",
+    "options": [
+      "Merge sort",
+      "Bubble sort",
+      "Quick sort",
+      "Heap sort"
+    ],
+    "answer": "Bubble sort",
+    "explanation": "Bubble sort can be O(n) in the best case with an already sorted list, but O(n^2) in the worst case.",
+    "id": "Q165"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "In Python, what does len([1,2,3,4]) return?",
+    "options": [
+      "3",
+      "4",
+      "[1,2,3,4]",
+      "Error"
+    ],
+    "answer": "4",
+    "explanation": "len returns the number of items in the list, which is 4 here.",
+    "id": "Q166"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which OOP principle lets the same method name behave differently in different classes?",
+    "options": [
+      "Encapsulation",
+      "Inheritance",
+      "Polymorphism",
+      "Abstraction"
+    ],
+    "answer": "Polymorphism",
+    "explanation": "Polymorphism lets the same interface or method name behave differently in different classes.",
+    "id": "Q167"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which Python statement handles exceptions?",
+    "options": [
+      "if/else",
+      "try/except",
+      "for/in",
+      "catch/throw"
+    ],
+    "answer": "try/except",
+    "explanation": "try/except is Python's standard structure for catching and handling exceptions.",
+    "id": "Q168"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which Python exception is raised when accessing a list position that does not exist?",
+    "options": [
+      "KeyError",
+      "ValueError",
+      "IndexError",
+      "TypeError"
+    ],
+    "answer": "IndexError",
+    "explanation": "IndexError is raised when code tries to access a list position outside the valid index range.",
+    "id": "Q169"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "What does PEP 8 refer to in Python?",
+    "options": [
+      "A package manager",
+      "Python's official style guide",
+      "A testing framework",
+      "A version number"
+    ],
+    "answer": "Python's official style guide",
+    "explanation": "PEP 8 is the standard Python style guide covering formatting, naming, and layout conventions.",
+    "id": "Q170"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "Which of these is an example of a syntax error?",
+    "options": [
+      "Dividing by zero at runtime",
+      "Missing closing parenthesis",
+      "Wrong output from correct code",
+      "File not found"
+    ],
+    "answer": "Missing closing parenthesis",
+    "explanation": "A missing closing parenthesis breaks the program's syntax before it can run.",
+    "id": "Q171"
+  },
+  {
+    "module": "02_intro_programming",
+    "question": "What is the main purpose of a unit test?",
+    "options": [
+      "Test the entire system end-to-end",
+      "Test one small part in isolation",
+      "Test user acceptance",
+      "Test network performance"
+    ],
+    "answer": "Test one small part in isolation",
+    "explanation": "A unit test checks one small function or component in isolation so faults are easier to locate.",
+    "id": "Q172"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "Which distance metric computes straight-line distance between two points?",
+    "options": [
+      "Manhattan",
+      "Euclidean",
+      "Hamming",
+      "Jaccard"
+    ],
+    "answer": "Euclidean",
+    "explanation": "Euclidean distance is the usual straight-line distance between two points.",
+    "id": "Q173"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "What does the F1 score balance?",
+    "options": [
+      "Accuracy and loss",
+      "Precision and recall",
+      "TPR and FPR",
+      "Bias and variance"
+    ],
+    "answer": "Precision and recall",
+    "explanation": "The F1 score is the harmonic mean of precision and recall, so it balances both.",
+    "id": "Q174"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "Which scale of measurement has a true zero point and allows ratios?",
+    "options": [
+      "Nominal",
+      "Ordinal",
+      "Interval",
+      "Ratio"
+    ],
+    "answer": "Ratio",
+    "explanation": "Ratio scales have equal intervals and a true zero, so multiplication and division are meaningful.",
+    "id": "Q175"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "In the confusion matrix, a false positive is also known as:",
+    "options": [
+      "Type I error",
+      "Type II error",
+      "True positive",
+      "True negative"
+    ],
+    "answer": "Type I error",
+    "explanation": "A false positive means predicting a positive when the truth is negative, which is a Type I error.",
+    "id": "Q176"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "JSON and XML are best described as which data type?",
+    "options": [
+      "Structured",
+      "Semi-structured",
+      "Unstructured",
+      "Quasi-structured"
+    ],
+    "answer": "Semi-structured",
+    "explanation": "JSON and XML have some consistent structure, but not the fixed schema of fully structured tables.",
+    "id": "Q177"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "What does the Apriori property state?",
+    "options": [
+      "All itemsets are frequent",
+      "If an itemset is frequent, all its subsets are frequent",
+      "Confidence always exceeds support",
+      "Lift is always > 1"
+    ],
+    "answer": "If an itemset is frequent, all its subsets are frequent",
+    "explanation": "Apriori pruning works because if an itemset is frequent, all of its subsets must also be frequent.",
+    "id": "Q178"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "In association rules, what does confidence measure?",
+    "options": [
+      "How often the rule appears overall",
+      "How often the consequent occurs when the antecedent occurs",
+      "Whether the rule beats chance",
+      "The size of the itemset"
+    ],
+    "answer": "How often the consequent occurs when the antecedent occurs",
+    "explanation": "Confidence measures how often the consequent appears when the antecedent is present.",
+    "id": "Q179"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "Which classifier uses conditional probability with an independence assumption?",
+    "options": [
+      "Decision tree",
+      "Naive Bayes",
+      "SVM",
+      "k-NN"
+    ],
+    "answer": "Naive Bayes",
+    "explanation": "Naive Bayes uses conditional probability and assumes features are independent given the class.",
+    "id": "Q180"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "What does R^2 represent in regression?",
+    "options": [
+      "Residual standard error",
+      "Fraction of variance explained by the model",
+      "Root mean square error",
+      "Correlation coefficient"
+    ],
+    "answer": "Fraction of variance explained by the model",
+    "explanation": "R^2 is the proportion of variance in the target explained by the regression model.",
+    "id": "Q181"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "Which unsupervised learning task finds items that frequently co-occur?",
+    "options": [
+      "Classification",
+      "Clustering",
+      "Association rule mining",
+      "Regression"
+    ],
+    "answer": "Association rule mining",
+    "explanation": "Association rule mining searches for items or events that frequently appear together in the same transactions.",
+    "id": "Q182"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "Which SQL operation combines related tables based on a matching column?",
+    "options": [
+      "UNION",
+      "JOIN",
+      "SELECT",
+      "INSERT"
+    ],
+    "answer": "JOIN",
+    "explanation": "JOIN is used to combine rows from related tables using a shared key or matching field.",
+    "id": "Q183"
+  },
+  {
+    "module": "03_foundations_data_science",
+    "question": "In the six-phase data-science lifecycle, which phase chooses methods, features, metrics, and evaluation strategy?",
+    "options": [
+      "Discovery",
+      "Data Preparation",
+      "Model Planning",
+      "Model Building"
+    ],
+    "answer": "Model Planning",
+    "explanation": "Model Planning is the lifecycle phase where methods, features, metrics, and evaluation strategy are chosen.",
+    "id": "Q184"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which SDLC phase creates an implementable blueprint from analysis?",
+    "options": [
+      "Planning",
+      "Analysis",
+      "Design",
+      "Implementation"
+    ],
+    "answer": "Design",
+    "explanation": "The design phase turns analysis output into an implementable blueprint for building the system.",
+    "id": "Q185"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "What does BPI stand for in organisational change?",
+    "options": [
+      "Business Process Innovation",
+      "Business Process Improvement",
+      "Business Protocol Integration",
+      "Business Plan Iteration"
+    ],
+    "answer": "Business Process Improvement",
+    "explanation": "BPI means improving an existing business process rather than radically redesigning it.",
+    "id": "Q186"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "In UML class diagrams, which symbol represents a private attribute?",
+    "options": [
+      "+",
+      "#",
+      "-",
+      "~"
+    ],
+    "answer": "-",
+    "explanation": "In UML, the minus sign indicates a private member that should not be accessed directly from outside the class.",
+    "id": "Q187"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which SQL category includes INSERT, UPDATE, and DELETE?",
+    "options": [
+      "DDL",
+      "DML",
+      "DQL",
+      "DCL"
+    ],
+    "answer": "DML",
+    "explanation": "INSERT, UPDATE, and DELETE are Data Manipulation Language commands because they change table data.",
+    "id": "Q188"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "What does the multiplicity notation 1..* in UML mean?",
+    "options": [
+      "Exactly one",
+      "Zero or one",
+      "One or more",
+      "Zero or many"
+    ],
+    "answer": "One or more",
+    "explanation": "The multiplicity 1..* means at least one related instance is required, and there may be many.",
+    "id": "Q189"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "In client-server architecture, which tier handles application logic in a 3-tier model?",
+    "options": [
+      "Client/presentation",
+      "Middle/application",
+      "Database",
+      "Network"
+    ],
+    "answer": "Middle/application",
+    "explanation": "In a three-tier design, the middle or application tier contains the main business logic.",
+    "id": "Q190"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which conversion strategy runs the old and new system simultaneously?",
+    "options": [
+      "Direct",
+      "Parallel",
+      "Pilot",
+      "Phased"
+    ],
+    "answer": "Parallel",
+    "explanation": "Parallel conversion runs the old and new systems side by side to reduce changeover risk.",
+    "id": "Q191"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which testing uses real but monitored data at the customer site?",
+    "options": [
+      "Alpha",
+      "Beta",
+      "Unit",
+      "Integration"
+    ],
+    "answer": "Beta",
+    "explanation": "Beta testing uses the system in a real user environment with live but monitored use.",
+    "id": "Q192"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which UI prototype type has the lowest level of detail?",
+    "options": [
+      "HTML prototype",
+      "Language prototype",
+      "Storyboard",
+      "Functional prototype"
+    ],
+    "answer": "Storyboard",
+    "explanation": "A storyboard is a low-detail prototype used early to sketch screens and flows cheaply.",
+    "id": "Q193"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which feasibility type asks \"will the business and users accept the system\"?",
+    "options": [
+      "Technical",
+      "Economic",
+      "Organisational",
+      "Schedule"
+    ],
+    "answer": "Organisational",
+    "explanation": "Organisational feasibility asks whether the business and its users will accept and support the system.",
+    "id": "Q194"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "In a use case diagram, which relationship shows optional behaviour added only in certain conditions?",
+    "options": [
+      "include",
+      "extend",
+      "generalization",
+      "association"
+    ],
+    "answer": "extend",
+    "explanation": "An extend relationship adds optional or conditional behaviour to a base use case.",
+    "id": "Q195"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which requirements-gathering technique is best for seeing how users actually perform their work?",
+    "options": [
+      "Questionnaire",
+      "JAD",
+      "Observation",
+      "Document analysis"
+    ],
+    "answer": "Observation",
+    "explanation": "Observation gathers requirements by watching real work as it happens rather than relying only on reports from users.",
+    "id": "Q196"
+  },
+  {
+    "module": "05_systems_analysis_design",
+    "question": "Which client type keeps most application logic on the server side?",
+    "options": [
+      "Thick client",
+      "Thin client",
+      "Hybrid client",
+      "Peer client"
+    ],
+    "answer": "Thin client",
+    "explanation": "A thin client depends on the server for most application processing and logic.",
+    "id": "Q197"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which legal instrument replaced the earlier UK data protection regime post-Brexit?",
+    "options": [
+      "GDPR only",
+      "Data Protection Act 2018",
+      "Freedom of Information Act",
+      "Computer Misuse Act"
+    ],
+    "answer": "Data Protection Act 2018",
+    "explanation": "The UK Data Protection Act 2018 supplements data-protection law in the post-Brexit UK framework.",
+    "id": "Q198"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which IP form protects a brand name or logo?",
+    "options": [
+      "Copyright",
+      "Patent",
+      "Trademark",
+      "Trade secret"
+    ],
+    "answer": "Trademark",
+    "explanation": "Trademarks protect brand identifiers such as names, logos, and symbols.",
+    "id": "Q199"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "What is the maximum GDPR fine for a serious breach?",
+    "options": [
+      "£1m or 1% turnover",
+      "£8.7m or 2% turnover",
+      "£17.5m or 4% turnover",
+      "Unlimited"
+    ],
+    "answer": "£17.5m or 4% turnover",
+    "explanation": "For the most serious GDPR breaches, the notes give a maximum penalty of GBP 17.5m or 4% of annual turnover.",
+    "id": "Q200"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which V refers to trustworthiness of data?",
+    "options": [
+      "Volume",
+      "Velocity",
+      "Veracity",
+      "Variety"
+    ],
+    "answer": "Veracity",
+    "explanation": "Veracity refers to the quality, reliability, or trustworthiness of data.",
+    "id": "Q201"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which term describes research done first-hand specifically for the current project?",
+    "options": [
+      "Secondary",
+      "Tertiary",
+      "Primary",
+      "Meta-research"
+    ],
+    "answer": "Primary",
+    "explanation": "Primary research is first-hand evidence gathered directly for the current project.",
+    "id": "Q202"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which of these is NOT normally protected whistleblowing?",
+    "options": [
+      "Reporting fraud",
+      "Reporting health and safety risks",
+      "Personal bullying grievance",
+      "Reporting environmental harm"
+    ],
+    "answer": "Personal bullying grievance",
+    "explanation": "A personal bullying grievance is usually handled through an internal grievance process, not protected whistleblowing.",
+    "id": "Q203"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which GDPR right allows individuals to have personal data deleted?",
+    "options": [
+      "Right to access",
+      "Right to erasure",
+      "Right to rectify",
+      "Right to object"
+    ],
+    "answer": "Right to erasure",
+    "explanation": "The right to erasure is the GDPR right commonly called the right to be forgotten.",
+    "id": "Q204"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which is a warning sign of a predatory journal?",
+    "options": [
+      "Slow peer review",
+      "Very fast publication with minimal peer review",
+      "Indexed in Scopus",
+      "Established editorial board"
+    ],
+    "answer": "Very fast publication with minimal peer review",
+    "explanation": "Very fast publication with little or no genuine peer review is a common warning sign of a predatory journal.",
+    "id": "Q205"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which case study showed racial bias emerging through a poor proxy variable?",
+    "options": [
+      "Equifax breach",
+      "Healthcare algorithm case",
+      "Care.data",
+      "Oracle vs Google"
+    ],
+    "answer": "Healthcare algorithm case",
+    "explanation": "The healthcare algorithm case is the example where a proxy variable led to racially biased outcomes.",
+    "id": "Q206"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which organisation is a well-known IT professional body?",
+    "options": [
+      "BCS",
+      "WHO",
+      "UNESCO",
+      "OECD"
+    ],
+    "answer": "BCS",
+    "explanation": "BCS is a major UK professional body for computing and IT practitioners.",
+    "id": "Q207"
+  },
+  {
+    "module": "06_lsep_data_science",
+    "question": "Which GDPR/DPA principle requires personal data to be correct and kept up to date?",
+    "options": [
+      "Data minimisation",
+      "Accuracy",
+      "Purpose limitation",
+      "Storage limitation"
+    ],
+    "answer": "Accuracy",
+    "explanation": "The accuracy principle requires personal data to be correct and kept up to date.",
+    "id": "Q208"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which cohesion type is the best/most desirable?",
+    "options": [
+      "Coincidental",
+      "Temporal",
+      "Functional",
+      "Logical"
+    ],
+    "answer": "Functional",
+    "explanation": "Functional cohesion is strongest because everything in the component supports one clear responsibility.",
+    "id": "Q209"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which coupling type is the worst?",
+    "options": [
+      "Data coupling",
+      "Stamp coupling",
+      "Content coupling",
+      "Control coupling"
+    ],
+    "answer": "Content coupling",
+    "explanation": "Content coupling is the worst form because one module depends directly on another's internals.",
+    "id": "Q210"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which coupling type exists when modules share global data?",
+    "options": [
+      "Data coupling",
+      "Common coupling",
+      "Control coupling",
+      "Content coupling"
+    ],
+    "answer": "Common coupling",
+    "explanation": "Common coupling occurs when modules share the same global data.",
+    "id": "Q211"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which RUP phase involves moving the product to its users?",
+    "options": [
+      "Inception",
+      "Elaboration",
+      "Construction",
+      "Transition"
+    ],
+    "answer": "Transition",
+    "explanation": "In RUP, Transition is the phase where the product is delivered and moved into user operation.",
+    "id": "Q212"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which UML diagram shows a snapshot of specific objects at one moment in time?",
+    "options": [
+      "Class diagram",
+      "Object diagram",
+      "Sequence diagram",
+      "State diagram"
+    ],
+    "answer": "Object diagram",
+    "explanation": "An object diagram shows specific instances and their links at one moment in time.",
+    "id": "Q213"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which design pattern adds responsibilities to an object dynamically without changing its class?",
+    "options": [
+      "Abstract Factory",
+      "Decorator",
+      "Mediator",
+      "Observer"
+    ],
+    "answer": "Decorator",
+    "explanation": "The Decorator pattern adds responsibilities dynamically without changing the original class.",
+    "id": "Q214"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "What distinguishes a closed from an open layered architecture?",
+    "options": [
+      "Closed is encrypted",
+      "Closed allows a layer to use only the next immediate layer",
+      "Open is faster",
+      "Closed has fewer layers"
+    ],
+    "answer": "Closed allows a layer to use only the next immediate layer",
+    "explanation": "In a closed layered architecture, each layer may use only the next immediate layer below it.",
+    "id": "Q215"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "In BCED architecture, which layer holds the domain model?",
+    "options": [
+      "Boundary",
+      "Control",
+      "Entity",
+      "Database"
+    ],
+    "answer": "Entity",
+    "explanation": "In BCED, the entity layer represents the core domain data and business objects.",
+    "id": "Q216"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which sequence diagram fragment represents iteration?",
+    "options": [
+      "opt",
+      "alt",
+      "loop",
+      "par"
+    ],
+    "answer": "loop",
+    "explanation": "The loop fragment in a sequence diagram represents repeated interaction.",
+    "id": "Q217"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "What does the Microsoft SDL \"secure by default\" principle mean?",
+    "options": [
+      "Security features must be manually enabled",
+      "Default settings should be the most secure option",
+      "Security is only the user's responsibility",
+      "Default passwords are mandatory"
+    ],
+    "answer": "Default settings should be the most secure option",
+    "explanation": "Secure by default means the safest settings should be enabled unless there is a strong reason not to.",
+    "id": "Q218"
+  },
+  {
+    "module": "07_advanced_systems_programming",
+    "question": "Which diagram best shows run-time hardware distribution?",
+    "options": [
+      "Class diagram",
+      "Component diagram",
+      "Deployment diagram",
+      "Activity diagram"
+    ],
+    "answer": "Deployment diagram",
+    "explanation": "Deployment diagrams show the run-time distribution of software onto hardware nodes.",
+    "id": "Q219"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "What is the z-score formula?",
+    "options": [
+      "(x - mu) x sigma",
+      "(x - mu) / sigma",
+      "(x + mu) / sigma",
+      "x / (mu - sigma)"
+    ],
+    "answer": "(x - mu) / sigma",
+    "explanation": "A z-score standardises a value by subtracting the mean and dividing by the standard deviation: (x - mu) / sigma.",
+    "id": "Q220"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "Under the 68-95-99.7 rule, what percentage of normal data lies within +/-2 SD of the mean?",
+    "options": [
+      "68%",
+      "95%",
+      "99.7%",
+      "50%"
+    ],
+    "answer": "95%",
+    "explanation": "For a normal distribution, about 95% of observations fall within two standard deviations of the mean.",
+    "id": "Q221"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "A Type II error is:",
+    "options": [
+      "Rejecting a true null",
+      "Failing to reject a false null",
+      "Setting alpha too high",
+      "Using the wrong test"
+    ],
+    "answer": "Failing to reject a false null",
+    "explanation": "A Type II error means failing to reject the null hypothesis even though it is false.",
+    "id": "Q222"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "In ARIMA, the parameter p is usually identified from which plot?",
+    "options": [
+      "ACF",
+      "PACF",
+      "Scatter plot",
+      "Histogram"
+    ],
+    "answer": "PACF",
+    "explanation": "PACF is commonly used to identify the autoregressive order p in ARIMA-style modelling.",
+    "id": "Q223"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "Which nonparametric test replaces a one-way ANOVA?",
+    "options": [
+      "Wilcoxon signed-rank",
+      "Mann-Whitney U",
+      "Kruskal-Wallis",
+      "Chi-squared"
+    ],
+    "answer": "Kruskal-Wallis",
+    "explanation": "Kruskal-Wallis is the standard nonparametric alternative to one-way ANOVA.",
+    "id": "Q224"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "A Durbin-Watson statistic close to 2 suggests:",
+    "options": [
+      "Strong positive autocorrelation",
+      "No autocorrelation",
+      "Strong negative autocorrelation",
+      "Perfect correlation"
+    ],
+    "answer": "No autocorrelation",
+    "explanation": "A Durbin-Watson value near 2 suggests residuals are not strongly autocorrelated.",
+    "id": "Q225"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "What does a PCA loading plot show?",
+    "options": [
+      "Variance of each PC",
+      "How strongly original variables contribute to PCs",
+      "Case positions in PC space",
+      "Cluster membership"
+    ],
+    "answer": "How strongly original variables contribute to PCs",
+    "explanation": "A PCA loading plot shows how strongly the original variables contribute to each principal component.",
+    "id": "Q226"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "Which test compares variances rather than means?",
+    "options": [
+      "t-test",
+      "chi^2 test",
+      "ANOVA",
+      "Z-test"
+    ],
+    "answer": "chi^2 test",
+    "explanation": "The chi-squared test is used here for inference about variance or standard deviation rather than mean differences.",
+    "id": "Q227"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "Which plot is best for showing hierarchical clustering results?",
+    "options": [
+      "Scree plot",
+      "Dendrogram",
+      "Box plot",
+      "ACF"
+    ],
+    "answer": "Dendrogram",
+    "explanation": "A dendrogram visualises the hierarchy produced by hierarchical clustering.",
+    "id": "Q228"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "In the regression equation y_hat = 3 + 2x, what is the slope?",
+    "options": [
+      "3",
+      "2",
+      "5",
+      "x"
+    ],
+    "answer": "2",
+    "explanation": "In y = a + bx form, the coefficient of x is the slope, so the slope is 2.",
+    "id": "Q229"
+  },
+  {
+    "module": "08_interpreting_data",
+    "question": "Which plot is usually best for showing the relationship between two numeric variables?",
+    "options": [
+      "Histogram",
+      "Box plot",
+      "Scatter plot",
+      "Bar chart"
+    ],
+    "answer": "Scatter plot",
+    "explanation": "A scatter plot is designed to show the relationship or association between two numeric variables.",
+    "id": "Q230"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which project type has low certainty about both the goal and the process?",
+    "options": [
+      "Painting-by-numbers",
+      "Quest",
+      "Movie",
+      "Foggy"
+    ],
+    "answer": "Foggy",
+    "explanation": "A foggy project has uncertainty in both the destination and the way to get there.",
+    "id": "Q231"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which precedence relationship means a successor cannot start until the predecessor finishes?",
+    "options": [
+      "Start-to-Start",
+      "Finish-to-Start",
+      "Finish-to-Finish",
+      "Start-to-Finish"
+    ],
+    "answer": "Finish-to-Start",
+    "explanation": "Finish-to-Start means the second activity must wait until the first one is complete.",
+    "id": "Q232"
+  },
+  {
+    "module": "09_project_management",
+    "question": "In EVM, what does PV stand for?",
+    "options": [
+      "Project Value",
+      "Planned Value",
+      "Process Variance",
+      "Performance Variable"
+    ],
+    "answer": "Planned Value",
+    "explanation": "PV stands for Planned Value, the amount of work that should have been completed by that point.",
+    "id": "Q233"
+  },
+  {
+    "module": "09_project_management",
+    "question": "A programme is best described as:",
+    "options": [
+      "A single project",
+      "A coordinated collection of related projects",
+      "A task within a project",
+      "An activity"
+    ],
+    "answer": "A coordinated collection of related projects",
+    "explanation": "A programme is a coordinated collection of related projects managed together.",
+    "id": "Q234"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which process group formally authorises a project or phase?",
+    "options": [
+      "Initiating",
+      "Planning",
+      "Executing",
+      "Closing"
+    ],
+    "answer": "Initiating",
+    "explanation": "Initiating formally authorises a project or phase and establishes that the work should begin.",
+    "id": "Q235"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which cost should NOT influence a decision to continue investment?",
+    "options": [
+      "Direct",
+      "Indirect",
+      "Sunk",
+      "Tangible"
+    ],
+    "answer": "Sunk",
+    "explanation": "Sunk costs are already incurred and should not drive future go/no-go decisions.",
+    "id": "Q236"
+  },
+  {
+    "module": "09_project_management",
+    "question": "In a projectized organisational structure, the project manager typically has:",
+    "options": [
+      "Low authority",
+      "High authority",
+      "No authority",
+      "Shared authority only"
+    ],
+    "answer": "High authority",
+    "explanation": "In a projectized structure, the project manager usually has strong control over resources and decisions.",
+    "id": "Q237"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which quality tool is best for assessing process stability?",
+    "options": [
+      "Histogram",
+      "Scatter diagram",
+      "Control chart",
+      "Pareto chart"
+    ],
+    "answer": "Control chart",
+    "explanation": "Control charts track process variation over time and help judge whether a process is stable.",
+    "id": "Q238"
+  },
+  {
+    "module": "09_project_management",
+    "question": "\"Risk appetite\" refers to:",
+    "options": [
+      "Number of identified risks",
+      "Level of risk stakeholders are willing to accept",
+      "Total cost of risk responses",
+      "A risk register field"
+    ],
+    "answer": "Level of risk stakeholders are willing to accept",
+    "explanation": "Risk appetite is the level of risk stakeholders are willing to accept.",
+    "id": "Q239"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which risk management process comes first?",
+    "options": [
+      "Plan risk responses",
+      "Plan risk management",
+      "Implement responses",
+      "Monitor risks"
+    ],
+    "answer": "Plan risk management",
+    "explanation": "Risk management starts by deciding how risk will be identified, analysed, and controlled.",
+    "id": "Q240"
+  },
+  {
+    "module": "09_project_management",
+    "question": "In schedule networks, what does float (or slack) represent?",
+    "options": [
+      "The earliest start of an activity",
+      "How much an activity can slip without causing schedule problems",
+      "The total duration of the project",
+      "The number of parallel activities"
+    ],
+    "answer": "How much an activity can slip without causing schedule problems",
+    "explanation": "Float or slack is the amount of delay an activity can absorb without causing a schedule problem.",
+    "id": "Q241"
+  },
+  {
+    "module": "09_project_management",
+    "question": "Which process group is responsible for formal project completion?",
+    "options": [
+      "Initiating",
+      "Executing",
+      "Monitoring & controlling",
+      "Closing"
+    ],
+    "answer": "Closing",
+    "explanation": "The Closing process group handles formal completion, acceptance, and shutdown of the project or phase.",
+    "id": "Q242"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which CRISP-DM phase involves putting the model into use?",
+    "options": [
+      "Evaluation",
+      "Modelling",
+      "Deployment",
+      "Business understanding"
+    ],
+    "answer": "Deployment",
+    "explanation": "Deployment is the CRISP-DM phase where the model or its results are put into practical use.",
+    "id": "Q243"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which scaling method produces values with mean 0 and standard deviation 1?",
+    "options": [
+      "Min-max",
+      "Z-score standardisation",
+      "Log transform",
+      "One-hot"
+    ],
+    "answer": "Z-score standardisation",
+    "explanation": "Z-score standardisation rescales a feature to mean 0 and standard deviation 1.",
+    "id": "Q244"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which encoding is best for an ordinal variable like \"small/medium/large\"?",
+    "options": [
+      "One-hot",
+      "Ordinal encoding",
+      "Label shuffle",
+      "Dummy coding"
+    ],
+    "answer": "Ordinal encoding",
+    "explanation": "Ordinal encoding preserves the natural order of categories such as small, medium, and large.",
+    "id": "Q245"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "In k-means, which method helps choose the best k?",
+    "options": [
+      "Confusion matrix",
+      "Elbow method",
+      "ROC curve",
+      "Cross-validation"
+    ],
+    "answer": "Elbow method",
+    "explanation": "The elbow method helps choose k by looking for the point where extra clusters stop giving large improvement.",
+    "id": "Q246"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which ensemble method trains base learners sequentially, each focusing on previous mistakes?",
+    "options": [
+      "Bagging",
+      "Voting",
+      "Boosting",
+      "Stacking"
+    ],
+    "answer": "Boosting",
+    "explanation": "Boosting trains learners sequentially so later models focus on earlier errors.",
+    "id": "Q247"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which activation function is max(0, x)?",
+    "options": [
+      "Sigmoid",
+      "tanh",
+      "ReLU",
+      "Softmax"
+    ],
+    "answer": "ReLU",
+    "explanation": "ReLU is defined as max(0, x), so negative values become 0 and positive values pass through.",
+    "id": "Q248"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which linkage method in hierarchical clustering tends to produce chain-like clusters?",
+    "options": [
+      "Single",
+      "Complete",
+      "Average",
+      "Ward"
+    ],
+    "answer": "Single",
+    "explanation": "Single linkage can create chain-like clusters because it joins clusters using the closest pair of points.",
+    "id": "Q249"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "What does a silhouette score near 0 indicate about a point?",
+    "options": [
+      "Very well clustered",
+      "Weak or ambiguous assignment",
+      "Certainly misclassified",
+      "Outlier"
+    ],
+    "answer": "Weak or ambiguous assignment",
+    "explanation": "A silhouette score near 0 suggests the point lies near a cluster boundary and is only weakly assigned.",
+    "id": "Q250"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Dropout in neural networks is a form of:",
+    "options": [
+      "Activation function",
+      "Regularisation",
+      "Optimiser",
+      "Loss function"
+    ],
+    "answer": "Regularisation",
+    "explanation": "Dropout is a regularisation method because it reduces overfitting by randomly removing units during training.",
+    "id": "Q251"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "In CART decision trees, which split criterion is used?",
+    "options": [
+      "Entropy only",
+      "Gini index",
+      "Chi-squared",
+      "Information ratio"
+    ],
+    "answer": "Gini index",
+    "explanation": "CART commonly uses the Gini index to choose splits that reduce class impurity.",
+    "id": "Q252"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Which CRISP-DM phase checks whether the model actually meets the business or research objective?",
+    "options": [
+      "Data understanding",
+      "Modelling",
+      "Evaluation",
+      "Deployment"
+    ],
+    "answer": "Evaluation",
+    "explanation": "Evaluation is where model performance is checked against the original business or research objective.",
+    "id": "Q253"
+  },
+  {
+    "module": "10_machine_learning",
+    "question": "Why is it bad practice to keep using the test set while tuning a model?",
+    "options": [
+      "It is slower than cross-validation",
+      "It leaks evaluation information and gives an optimistically biased performance estimate",
+      "It changes the random seed",
+      "It violates normality assumptions"
+    ],
+    "answer": "It leaks evaluation information and gives an optimistically biased performance estimate",
+    "explanation": "Repeatedly consulting the test set leaks information from evaluation into model selection and makes performance look better than it really is.",
+    "id": "Q254"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which CIA principle is violated by a denial-of-service attack?",
+    "options": [
+      "Confidentiality",
+      "Integrity",
+      "Availability",
+      "Authenticity"
+    ],
+    "answer": "Availability",
+    "explanation": "A denial-of-service attack targets availability by making a service unreachable to legitimate users.",
+    "id": "Q255"
+  },
+  {
+    "module": "11_information_security",
+    "question": "In quantitative risk assessment, ALE equals:",
+    "options": [
+      "SLE x Asset Value",
+      "SLE x Annualised Rate of Occurrence",
+      "Exposure Factor x ARO",
+      "Impact x Likelihood"
+    ],
+    "answer": "SLE x Annualised Rate of Occurrence",
+    "explanation": "Annualised Loss Expectancy is calculated as single loss expectancy multiplied by annualised rate of occurrence.",
+    "id": "Q256"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which authentication factor is \"something you are\"?",
+    "options": [
+      "Password",
+      "Smart card",
+      "Fingerprint",
+      "Location"
+    ],
+    "answer": "Fingerprint",
+    "explanation": "A fingerprint is a biometric factor, so it is something you are.",
+    "id": "Q257"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which malware type self-replicates across networks?",
+    "options": [
+      "Trojan",
+      "Rootkit",
+      "Worm",
+      "Spyware"
+    ],
+    "answer": "Worm",
+    "explanation": "A worm self-replicates and spreads across systems or networks without needing the same user action as a trojan.",
+    "id": "Q258"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which ISO standard covers business continuity management?",
+    "options": [
+      "ISO 27001",
+      "ISO 27005",
+      "ISO 22301",
+      "ISO 9001"
+    ],
+    "answer": "ISO 22301",
+    "explanation": "ISO 22301 is the main standard for business continuity management.",
+    "id": "Q259"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which control type restores operations after an incident?",
+    "options": [
+      "Preventive",
+      "Detective",
+      "Corrective",
+      "Compensatory"
+    ],
+    "answer": "Corrective",
+    "explanation": "Corrective controls help restore systems or operations after an incident has already happened.",
+    "id": "Q260"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Salting a password means:",
+    "options": [
+      "Encrypting it with AES",
+      "Adding random data before hashing",
+      "Storing it in plaintext with a prefix",
+      "Using a longer password"
+    ],
+    "answer": "Adding random data before hashing",
+    "explanation": "Salting adds random data before hashing so identical passwords do not produce identical hashes.",
+    "id": "Q261"
+  },
+  {
+    "module": "11_information_security",
+    "question": "In the MITM attack family, which is an example?",
+    "options": [
+      "Phishing email",
+      "Session hijacking",
+      "Brute-force",
+      "Ransomware"
+    ],
+    "answer": "Session hijacking",
+    "explanation": "Session hijacking is a man-in-the-middle style attack in which an attacker takes over an active session.",
+    "id": "Q262"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which phishing variant targets a specific individual or organisation?",
+    "options": [
+      "Phishing",
+      "Vishing",
+      "Spear-phishing",
+      "Smishing"
+    ],
+    "answer": "Spear-phishing",
+    "explanation": "Spear-phishing is a targeted phishing attack aimed at a specific person or organisation.",
+    "id": "Q263"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which attack stage comes first in the lecture's four-stage model?",
+    "options": [
+      "Delivery",
+      "Survey",
+      "Breach",
+      "Affect"
+    ],
+    "answer": "Survey",
+    "explanation": "Survey is the reconnaissance stage, where attackers gather information before delivery or breach.",
+    "id": "Q264"
+  },
+  {
+    "module": "11_information_security",
+    "question": "Which part of the CIA triad is about information remaining accurate and unaltered?",
+    "options": [
+      "Confidentiality",
+      "Integrity",
+      "Availability",
+      "Accountability"
+    ],
+    "answer": "Integrity",
+    "explanation": "Integrity is about keeping information accurate, complete, and unaltered by unauthorised change.",
+    "id": "Q265"
+  },
+  {
+    "module": "11_information_security",
+    "question": "What is the difference between authentication and authorisation?",
+    "options": [
+      "They mean the same thing",
+      "Authentication proves identity; authorisation determines permissions",
+      "Authentication determines permissions; authorisation proves identity",
+      "Only authentication applies to users"
+    ],
+    "answer": "Authentication proves identity; authorisation determines permissions",
+    "explanation": "Authentication proves who a user is, while authorisation determines what that user is allowed to do.",
+    "id": "Q266"
+  },
+  {
+    "module": "11_information_security",
+    "question": "What is the main purpose of an asset register?",
+    "options": [
+      "To track employee attendance",
+      "To document assets, ownership, value, and risk-related details",
+      "To price software licences",
+      "To list approved vendors"
+    ],
+    "answer": "To document assets, ownership, value, and risk-related details",
+    "explanation": "An asset register records assets, owners, value, and related risk details so later security analysis has a clear basis.",
+    "id": "Q267"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "What is the default HDFS block size in Hadoop 2.x/3.x?",
+    "options": [
+      "32 MB",
+      "64 MB",
+      "128 MB",
+      "256 MB"
+    ],
+    "answer": "128 MB",
+    "explanation": "Modern Hadoop commonly uses 128 MB HDFS blocks to reduce metadata overhead and support large sequential reads.",
+    "id": "Q268"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "Which Spark abstraction is strongly typed at compile time?",
+    "options": [
+      "RDD",
+      "DataFrame",
+      "Dataset",
+      "Row"
+    ],
+    "answer": "Dataset",
+    "explanation": "In Spark, Dataset is the strongly typed high-level abstraction available in typed APIs.",
+    "id": "Q269"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "Which NoSQL family is MongoDB?",
+    "options": [
+      "Key-value",
+      "Document",
+      "Column-family",
+      "Graph"
+    ],
+    "answer": "Document",
+    "explanation": "MongoDB is a document database because it stores flexible document-style records rather than fixed relational rows.",
+    "id": "Q270"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "According to the slides, Cassandra's CAP posture is:",
+    "options": [
+      "CA",
+      "CP",
+      "AP",
+      "All three"
+    ],
+    "answer": "AP",
+    "explanation": "Cassandra is typically described as AP because it prioritises availability and partition tolerance.",
+    "id": "Q271"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "In MapReduce, which component performs local pre-aggregation to reduce shuffle traffic?",
+    "options": [
+      "Partitioner",
+      "Combiner",
+      "Reducer",
+      "Mapper"
+    ],
+    "answer": "Combiner",
+    "explanation": "A combiner performs local aggregation before shuffle, reducing data sent across the network.",
+    "id": "Q272"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "What does BASE stand for in NoSQL?",
+    "options": [
+      "Binary, Atomic, Secure, Eventual",
+      "Basically Available, Soft State, Eventually Consistent",
+      "Balanced, Async, Scaled, Elastic",
+      "Backup, Archive, Store, Export"
+    ],
+    "answer": "Basically Available, Soft State, Eventually Consistent",
+    "explanation": "BASE stands for Basically Available, Soft State, and Eventually Consistent.",
+    "id": "Q273"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "In YARN, which component coordinates a single application's execution?",
+    "options": [
+      "ResourceManager",
+      "NodeManager",
+      "ApplicationMaster",
+      "Container"
+    ],
+    "answer": "ApplicationMaster",
+    "explanation": "In YARN, each application has its own ApplicationMaster to coordinate that application's work.",
+    "id": "Q274"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "Which Hive table type keeps its data files when the table is dropped?",
+    "options": [
+      "Managed",
+      "Internal",
+      "External",
+      "Temporary"
+    ],
+    "answer": "External",
+    "explanation": "External Hive tables keep their underlying data files when the table definition is dropped.",
+    "id": "Q275"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "Which Spark operation is lazy?",
+    "options": [
+      "count",
+      "collect",
+      "map",
+      "take"
+    ],
+    "answer": "map",
+    "explanation": "map is a lazy Spark transformation, so it defines work without executing it immediately.",
+    "id": "Q276"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "Which tool is best for ingesting streaming logs/events into Hadoop?",
+    "options": [
+      "Sqoop",
+      "Flume",
+      "Hive",
+      "Pig"
+    ],
+    "answer": "Flume",
+    "explanation": "Flume is designed for collecting and ingesting streaming logs and event data into Hadoop.",
+    "id": "Q277"
+  },
+  {
+    "module": "12_scalable_systems_databases",
+    "question": "In Hadoop, what does data locality mean?",
+    "options": [
+      "Storing data only in one rack",
+      "Moving computation close to where the data is stored",
+      "Replicating data across regions",
+      "Keeping the NameNode near the client"
+    ],
+    "answer": "Moving computation close to where the data is stored",
+    "explanation": "Data locality means sending computation to the machine or node where the data already resides.",
+    "id": "Q278"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "Which search algorithm is guaranteed optimal when the heuristic is admissible?",
+    "options": [
+      "Greedy",
+      "DFS",
+      "A*",
+      "Hill climbing"
+    ],
+    "answer": "A*",
+    "explanation": "A* is optimal when the heuristic is admissible because it combines path cost so far with a safe estimate of remaining cost.",
+    "id": "Q279"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "In a genetic algorithm, which operator combines genes from two parents?",
+    "options": [
+      "Mutation",
+      "Crossover",
+      "Selection",
+      "Elitism"
+    ],
+    "answer": "Crossover",
+    "explanation": "Crossover combines genes from two parents to produce new candidate solutions.",
+    "id": "Q280"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "In NLP, what does TF-IDF weight combine?",
+    "options": [
+      "Term frequency and sentence length",
+      "Term frequency and inverse document frequency",
+      "Token count and n-gram size",
+      "Sentiment and frequency"
+    ],
+    "answer": "Term frequency and inverse document frequency",
+    "explanation": "TF-IDF combines term frequency within a document with inverse document frequency across the corpus.",
+    "id": "Q281"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "What is the main purpose of a pooling layer in a CNN?",
+    "options": [
+      "Apply activation",
+      "Downsample feature maps",
+      "Classify the output",
+      "Normalise inputs"
+    ],
+    "answer": "Downsample feature maps",
+    "explanation": "Pooling downsamples feature maps, reducing spatial size while retaining the strongest or most useful signals.",
+    "id": "Q282"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "Fuzzy logic allows truth values in:",
+    "options": [
+      "{0, 1} only",
+      "The interval [0, 1]",
+      "{-1, 0, 1}",
+      "Any real number"
+    ],
+    "answer": "The interval [0, 1]",
+    "explanation": "Fuzzy logic allows partial truth, so values can vary continuously between 0 and 1.",
+    "id": "Q283"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "In reinforcement learning, the policy is:",
+    "options": [
+      "The reward function",
+      "The rule for choosing actions",
+      "The transition model",
+      "The value estimate"
+    ],
+    "answer": "The rule for choosing actions",
+    "explanation": "A policy is the rule or mapping the agent uses to choose actions in each state.",
+    "id": "Q284"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "Which logic family includes quantifiers and objects?",
+    "options": [
+      "Propositional",
+      "First-order logic",
+      "Boolean",
+      "Binary"
+    ],
+    "answer": "First-order logic",
+    "explanation": "First-order logic extends propositional logic with objects, predicates, and quantifiers.",
+    "id": "Q285"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "In transformer architecture, what provides word-order information?",
+    "options": [
+      "Self-attention",
+      "Positional encoding",
+      "Tokenisation",
+      "Cross-attention"
+    ],
+    "answer": "Positional encoding",
+    "explanation": "Transformers use positional encoding to inject word-order information into otherwise order-agnostic attention.",
+    "id": "Q286"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "Which RL component provides scalar feedback to the agent?",
+    "options": [
+      "State",
+      "Action",
+      "Reward",
+      "Policy"
+    ],
+    "answer": "Reward",
+    "explanation": "In reinforcement learning, reward is the scalar feedback signal telling the agent how good an outcome was.",
+    "id": "Q287"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "Bag-of-Words representation ignores:",
+    "options": [
+      "Word frequency",
+      "Word order and syntax",
+      "Document length",
+      "Vocabulary size"
+    ],
+    "answer": "Word order and syntax",
+    "explanation": "Bag-of-Words keeps word presence or frequency but discards word order and grammatical structure.",
+    "id": "Q288"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "Which agent type chooses among alternatives using a utility function?",
+    "options": [
+      "Simple reflex",
+      "Model-based reflex",
+      "Goal-based",
+      "Utility-based"
+    ],
+    "answer": "Utility-based",
+    "explanation": "A utility-based agent compares alternatives using a utility function and chooses the one with highest utility.",
+    "id": "Q289"
+  },
+  {
+    "module": "13_ai_for_data_science",
+    "question": "What is an admissible heuristic?",
+    "options": [
+      "One that always finds the goal",
+      "A heuristic that never overestimates the true remaining cost",
+      "A heuristic computed in constant time",
+      "One that always overestimates cost"
+    ],
+    "answer": "A heuristic that never overestimates the true remaining cost",
+    "explanation": "An admissible heuristic never overestimates the true remaining cost, which is why A* can still be optimal.",
+    "id": "Q290"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Which feasibility type asks \"can we deliver on time?\"",
+    "options": [
+      "Technical",
+      "Economic",
+      "Schedule",
+      "Operational"
+    ],
+    "answer": "Schedule",
+    "explanation": "Schedule feasibility focuses on whether the project can be delivered in the available time.",
+    "id": "Q291"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "In SMART objectives, what does M stand for?",
+    "options": [
+      "Manageable",
+      "Measurable",
+      "Mandatory",
+      "Mapped"
+    ],
+    "answer": "Measurable",
+    "explanation": "SMART objectives must be measurable so progress and success can be assessed objectively.",
+    "id": "Q292"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "The three-point estimate formula is:",
+    "options": [
+      "(O + M + P) / 3",
+      "(O + 4M + P) / 6",
+      "(O x M x P)^(1/3)",
+      "(O + P) / 2 + M"
+    ],
+    "answer": "(O + 4M + P) / 6",
+    "explanation": "PERT-style three-point estimation uses (O + 4M + P) / 6 to weight the most likely estimate more heavily.",
+    "id": "Q293"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "A major limitation of CRISP-DM as a full project methodology is:",
+    "options": [
+      "Too few phases",
+      "Weak coordination of roles, tools, and infrastructure",
+      "Too technical",
+      "Not widely used"
+    ],
+    "answer": "Weak coordination of roles, tools, and infrastructure",
+    "explanation": "CRISP-DM structures analytics work well, but it is relatively weak on team coordination, roles, tools, and infrastructure planning.",
+    "id": "Q294"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Which requirement characteristic means a requirement can be tested?",
+    "options": [
+      "Complete",
+      "Verifiable",
+      "Prioritised",
+      "Feasible"
+    ],
+    "answer": "Verifiable",
+    "explanation": "A requirement is verifiable if you can test or check whether it has been satisfied.",
+    "id": "Q295"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Which literature review failure is explicitly warned about?",
+    "options": [
+      "Listing and summarising sources without critical analysis",
+      "Including too many sources",
+      "Using peer-reviewed work",
+      "Referencing correctly"
+    ],
+    "answer": "Listing and summarising sources without critical analysis",
+    "explanation": "Simply listing and summarising sources is weak because a literature review should also evaluate and synthesise them critically.",
+    "id": "Q296"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Which requirements technique involves watching real work practices?",
+    "options": [
+      "Interview",
+      "JAD",
+      "Observation",
+      "Questionnaire"
+    ],
+    "answer": "Observation",
+    "explanation": "Observation gathers requirements by watching real work as it happens rather than relying only on reports from users.",
+    "id": "Q297"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "In a detailed use case description, \"preconditions\" are:",
+    "options": [
+      "Error paths",
+      "What must be true before the use case starts",
+      "Postconditions reversed",
+      "Alternative flows"
+    ],
+    "answer": "What must be true before the use case starts",
+    "explanation": "Preconditions are the things that must already be true before the use case can begin.",
+    "id": "Q298"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Which clustering evaluation metric is named in the module 14 success criteria?",
+    "options": [
+      "Silhouette",
+      "Dunn index",
+      "F1 score",
+      "AUC"
+    ],
+    "answer": "Dunn index",
+    "explanation": "The Dunn index is a clustering-quality metric based on separation between clusters and compactness within them.",
+    "id": "Q299"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Elements of a good business problem statement include:",
+    "options": [
+      "Budget and timeline",
+      "Current state, objective, and success criteria",
+      "Stakeholder list and risks",
+      "Team roles and tools"
+    ],
+    "answer": "Current state, objective, and success criteria",
+    "explanation": "The module emphasises three parts: the current state, the desired objective, and clear success criteria.",
+    "id": "Q300"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "Why is stakeholder analysis important during planning?",
+    "options": [
+      "It sets the project budget",
+      "It helps identify requirements, constraints, acceptance issues, and organisational feasibility",
+      "It replaces risk assessment",
+      "It defines the technical architecture"
+    ],
+    "answer": "It helps identify requirements, constraints, acceptance issues, and organisational feasibility",
+    "explanation": "Stakeholder analysis helps surface requirements, constraints, acceptance issues, and organisational feasibility early.",
+    "id": "Q301"
+  },
+  {
+    "module": "14_project_planning",
+    "question": "How does a goal differ from an objective?",
+    "options": [
+      "They are the same thing",
+      "A goal is a broad aim; an objective is a specific measurable step toward it",
+      "Goals are measurable; objectives are not",
+      "Objectives come before goals"
+    ],
+    "answer": "A goal is a broad aim; an objective is a specific measurable step toward it",
+    "explanation": "A goal is the broad overall aim, while an objective is a more specific and measurable step toward it.",
+    "id": "Q302"
   }
 ];

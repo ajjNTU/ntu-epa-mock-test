@@ -5,6 +5,9 @@
   const PAPER_SIZE = 30;
   const SESSION_STORAGE_KEY = "ntu_epa_mock_test_session_v1";
   const SCORE_STORAGE_KEY = "ntu_epa_mock_test_score_v1";
+  const RESULTS_STORAGE_KEY = "ntu_epa_mock_test_results_v1";
+  const UI_STORAGE_KEY = "ntu_epa_mock_test_ui_v1";
+  const MAX_RESULT_HISTORY = 20;
 
   const appRoot = document.getElementById("app");
   const headerActions = document.getElementById("header-actions");
@@ -17,6 +20,7 @@
     moduleTitles: {},
     session: null,
     result: null,
+    resultHistory: [],
     activeCheatsheet: null,
     lastScore: null,
     timerHandle: null,
@@ -34,6 +38,7 @@
     state.moduleOrder = deriveModuleOrder(state.moduleTitles);
     state.activeCheatsheet = state.moduleOrder[0] || null;
     state.lastScore = loadJson(SCORE_STORAGE_KEY);
+    state.resultHistory = loadResultHistory();
 
     if (!state.questionBank.length) {
       renderFatal("Question bank could not be loaded.");
@@ -42,6 +47,11 @@
 
     bindEvents();
 
+    const savedUiState = loadUiState();
+    if (savedUiState && isKnownModule(savedUiState.activeCheatsheet)) {
+      state.activeCheatsheet = savedUiState.activeCheatsheet;
+    }
+
     const savedSession = loadJson(SESSION_STORAGE_KEY);
     if (isValidSession(savedSession)) {
       state.session = savedSession;
@@ -49,7 +59,14 @@
         submitSession({ autoSubmitted: true });
         return;
       }
-      state.view = "quiz";
+      state.view = savedUiState && savedUiState.view === "cheatsheets" ? "cheatsheets" : "quiz";
+    } else if (savedUiState) {
+      restoreSavedResult(savedUiState);
+      if (savedUiState.view === "results" && state.result) {
+        state.view = "results";
+      } else if (savedUiState.view === "cheatsheets") {
+        state.view = "cheatsheets";
+      }
     }
     render();
   }
@@ -86,21 +103,36 @@
       return;
     }
 
+    if (action === "resume-review") {
+      if (state.result) {
+        state.view = "results";
+        render();
+      }
+      return;
+    }
+
     if (action === "abandon-test") {
       abandonSession();
       return;
     }
 
     if (action === "view-cheatsheets") {
-      if (!state.session) {
-        state.view = "cheatsheets";
-        render();
-      }
+      state.view = "cheatsheets";
+      render();
       return;
     }
 
     if (action === "select-cheatsheet") {
       state.activeCheatsheet = target.dataset.module || state.activeCheatsheet;
+      state.view = "cheatsheets";
+      render();
+      return;
+    }
+
+    if (action === "open-module-cheatsheet") {
+      if (target.dataset.module) {
+        state.activeCheatsheet = target.dataset.module;
+      }
       state.view = "cheatsheets";
       render();
       return;
@@ -149,6 +181,11 @@
         state.result.reviewIndex = Number(target.dataset.index);
         render();
       }
+      return;
+    }
+
+    if (action === "open-history-result") {
+      openSavedResult(target.dataset.resultId);
     }
   }
 
@@ -312,6 +349,7 @@
       .filter(Boolean);
 
     const result = {
+      id: `result-${session.id}`,
       completedAt: Date.now(),
       autoSubmitted,
       startedAt: session.startedAt,
@@ -336,6 +374,7 @@
       percentage: result.percentage,
     };
     saveJson(SCORE_STORAGE_KEY, state.lastScore);
+    saveCompletedResult(result);
 
     state.session = null;
     state.result = result;
@@ -346,6 +385,7 @@
 
   function render() {
     renderHeaderActions();
+    persistUiState();
 
     if (state.view === "quiz" && state.session) {
       startTimer();
@@ -371,11 +411,16 @@
   function renderHeaderActions() {
     const actions = [];
 
+    actions.push(buttonHtml("Home", "btn btn-ghost", "home"));
+
     if (state.session) {
+      actions.push(buttonHtml("Cheatsheets", "btn btn-secondary", "view-cheatsheets"));
       actions.push(buttonHtml("Resume Test", "btn btn-primary", "resume-test"));
       actions.push(buttonHtml("Abandon Test", "btn btn-ghost", "abandon-test"));
     } else {
-      actions.push(buttonHtml("Home", "btn btn-ghost", "home"));
+      if (state.result && state.view !== "results") {
+        actions.push(buttonHtml("Return to Review", "btn btn-secondary", "resume-review"));
+      }
       actions.push(buttonHtml("Cheatsheets", "btn btn-secondary", "view-cheatsheets"));
       actions.push(buttonHtml("New Mock Test", "btn btn-primary", "start-test"));
     }
@@ -410,6 +455,41 @@
       `
       : "";
 
+    const historySection = state.resultHistory.length
+      ? `
+        <section class="card panel">
+          <div class="history-heading">
+            <div>
+              <p class="eyebrow">Saved locally</p>
+              <h2>Recent Papers</h2>
+            </div>
+            <p class="muted-copy">Attempts stay in this browser so you can reopen the review page later.</p>
+          </div>
+          <div class="history-list">
+            ${state.resultHistory
+              .slice(0, 8)
+              .map(
+                (result) => `
+                  <div class="history-row">
+                    <div class="history-copy">
+                      <strong>${escapeHtml(`${result.score}/${result.total} (${result.percentage}%)`)}</strong>
+                      <span>${escapeHtml(`${formatDateTime(result.completedAt)} · ${formatDuration(result.elapsedSeconds)} used`)}</span>
+                    </div>
+                    ${buttonHtml(
+                      "Review",
+                      "btn btn-secondary",
+                      "open-history-result",
+                      ` data-result-id="${escapeHtml(result.id)}"`
+                    )}
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        </section>
+      `
+      : "";
+
     const dataWarningBanner = !canStartTest
       ? `
         <div class="warning-banner card">
@@ -428,7 +508,7 @@
           <p class="eyebrow">Desktop-first exam simulation</p>
           <h2>Practice the NTU Data Scientist EPA knowledge test with a timed 30-question paper.</h2>
           <p>
-            This static app uses the completed 150-question bank across the 13 in-scope modules. The mock paper is timed,
+            This static app uses the completed 302-question bank across the 13 in-scope modules. The mock paper is timed,
             closed-book in spirit, and designed for direct local use or GitHub Pages sharing.
           </p>
           <div class="pill-row">
@@ -444,10 +524,10 @@
               state.session ? "resume-test" : "start-test",
               !state.session && !canStartTest ? " disabled" : ""
             )}
-            ${buttonHtml("Browse Cheatsheets", "btn btn-secondary", "view-cheatsheets", state.session ? " disabled" : "")}
+            ${buttonHtml("Browse Cheatsheets", "btn btn-secondary", "view-cheatsheets")}
           </div>
           <p class="footer-note">
-            Cheatsheets stay outside the live test flow. During an active timed paper, the app only exposes resume or abandon actions.
+            The timer keeps running if you open cheatsheets during a live paper. Your test and review screens stay restorable in this browser.
           </p>
         </div>
         <div class="stat-grid">
@@ -469,6 +549,7 @@
           </div>
         </div>
       </section>
+      ${historySection}
     `;
   }
 
@@ -570,7 +651,16 @@
           <div class="question-grid" id="question-palette">${paletteHtml}</div>
 
           <div class="notice" style="margin-top: 18px;">
-            Unanswered questions count as incorrect on submission. No answer feedback is shown during the live paper.
+            Unanswered questions count as incorrect on submission. Opening a cheatsheet does not pause the timer.
+          </div>
+
+          <div class="action-row">
+            ${buttonHtml(
+              "Open This Module's Cheatsheet",
+              "btn btn-secondary",
+              "open-module-cheatsheet",
+              ` data-module="${escapeHtml(question.module)}"`
+            )}
           </div>
         </aside>
       </section>
@@ -658,6 +748,12 @@
           <div class="action-row">
             ${buttonHtml("Start New Paper", "btn btn-primary", "new-from-results")}
             ${buttonHtml("View Cheatsheets", "btn btn-secondary", "view-cheatsheets")}
+            ${buttonHtml(
+              "Open Current Module Cheatsheet",
+              "btn btn-secondary",
+              "open-module-cheatsheet",
+              ` data-module="${escapeHtml(reviewItem.question.module)}"`
+            )}
             ${buttonHtml("Home", "btn btn-ghost", "home")}
           </div>
 
@@ -697,6 +793,27 @@
 
   function renderCheatsheets() {
     const cheatsheet = state.cheatsheets.find((sheet) => sheet.module === state.activeCheatsheet) || state.cheatsheets[0];
+    const returnBanner = state.session
+      ? `
+        <div class="notice reference-banner">
+          <strong>Timed paper still running.</strong>
+          The timer has not been paused.
+          <div class="action-row">
+            ${buttonHtml("Resume Test", "btn btn-primary", "resume-test")}
+          </div>
+        </div>
+      `
+      : state.result
+      ? `
+        <div class="notice reference-banner">
+          <strong>Review remains available.</strong>
+          This completed paper is saved locally and can be reopened.
+          <div class="action-row">
+            ${buttonHtml("Return to Review", "btn btn-primary", "resume-review")}
+          </div>
+        </div>
+      `
+      : "";
     const moduleButtons = state.cheatsheets
       .map(
         (sheet) => `
@@ -715,7 +832,8 @@
       <section class="cheatsheet-layout">
         <aside class="card panel">
           <h2>Cheatsheets</h2>
-          <p class="muted-copy">Revision content is separate from the timed paper. Use this view before or after a mock test.</p>
+          <p class="muted-copy">Revision content stays available before, during, or after a mock test.</p>
+          ${returnBanner}
           <div class="review-list">${moduleButtons}</div>
         </aside>
 
@@ -1075,6 +1193,60 @@
     window.localStorage.removeItem(SESSION_STORAGE_KEY);
   }
 
+  function restoreSavedResult(savedUiState) {
+    if (!savedUiState || !savedUiState.activeResultId) {
+      return;
+    }
+    const match = state.resultHistory.find((result) => result.id === savedUiState.activeResultId);
+    if (!match) {
+      return;
+    }
+    const reviewIndex = Number(savedUiState.reviewIndex);
+    match.reviewIndex = Number.isInteger(reviewIndex) ? clamp(reviewIndex, 0, match.items.length - 1) : match.reviewIndex || 0;
+    state.result = match;
+  }
+
+  function openSavedResult(resultId) {
+    const match = state.resultHistory.find((result) => result.id === resultId);
+    if (!match) {
+      return;
+    }
+    state.result = match;
+    state.view = "results";
+    render();
+  }
+
+  function saveCompletedResult(result) {
+    state.resultHistory = [result, ...state.resultHistory.filter((item) => item.id !== result.id)].slice(0, MAX_RESULT_HISTORY);
+    saveJson(RESULTS_STORAGE_KEY, state.resultHistory);
+  }
+
+  function persistUiState() {
+    saveJson(UI_STORAGE_KEY, {
+      view: state.view,
+      activeCheatsheet: state.activeCheatsheet,
+      activeResultId: state.result ? state.result.id : null,
+      reviewIndex: state.result ? state.result.reviewIndex : 0,
+    });
+
+    if (state.resultHistory.length) {
+      saveJson(RESULTS_STORAGE_KEY, state.resultHistory);
+    }
+  }
+
+  function loadUiState() {
+    const saved = loadJson(UI_STORAGE_KEY);
+    return saved && typeof saved === "object" ? saved : null;
+  }
+
+  function loadResultHistory() {
+    const saved = loadJson(RESULTS_STORAGE_KEY);
+    if (!Array.isArray(saved)) {
+      return [];
+    }
+    return saved.filter(isValidResult).slice(0, MAX_RESULT_HISTORY);
+  }
+
   function buildModuleTitles(cheatsheets, questionBank) {
     const titles = {};
     for (const sheet of cheatsheets) {
@@ -1100,6 +1272,10 @@
     return state.moduleTitles[module] || titleFromModule(module);
   }
 
+  function isKnownModule(module) {
+    return typeof module === "string" && state.moduleOrder.includes(module);
+  }
+
   function titleFromModule(module) {
     return String(module || "")
       .replace(/^\d+_/, "")
@@ -1118,6 +1294,17 @@
         session.startedAt &&
         session.answers &&
         session.flagged
+    );
+  }
+
+  function isValidResult(result) {
+    return Boolean(
+      result &&
+        typeof result.id === "string" &&
+        Array.isArray(result.items) &&
+        typeof result.score === "number" &&
+        typeof result.total === "number" &&
+        typeof result.completedAt === "number"
     );
   }
 

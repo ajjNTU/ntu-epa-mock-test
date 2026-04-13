@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "module": "01_introductory_maths",
+    "question": "Solve the quadratic equation x² − 5x + 6 = 0.",
+    "options": ["x = 1, x = 6", "x = 2, x = 3", "x = −2, x = −3", "x = 5, x = 6"],
+    "answer": 1,
+    "explanation": "Factorise: (x−2)(x−3) = 0, so x = 2 or x = 3."
+  },
+  {
+    "id": 2,
+    "module": "01_introductory_maths",
+    "question": "Which measure of central tendency is least affected by outliers?",
+    "options": ["Mean", "Median", "Mode", "Standard deviation"],
+    "answer": 1,
+    "explanation": "The median depends only on the middle value(s) after sorting, so extreme values barely affect it. The mean is pulled toward outliers."
+  },
+  {
+    "id": 3,
+    "module": "02_intro_programming",
+    "question": "What is the primary purpose of a version control system such as Git?",
+    "options": [
+      "To enforce programming style rules across a team",
+      "To track changes to code over time and support collaboration",
+      "To compile source code into executables",
+      "To restrict which developers can view the codebase"
+    ],
+    "answer": 1,
+    "explanation": "Git tracks changes to files over time and makes it possible for multiple people to work on the same codebase without overwriting each other's work."
+  },
+  {
+    "id": 4,
+    "module": "02_intro_programming",
+    "question": "Which Python collection type is ordered, immutable, and allows duplicates?",
+    "options": ["list", "tuple", "set", "dict"],
+    "answer": 1,
+    "explanation": "Tuples are ordered and allow duplicates but cannot be changed after creation. Lists are mutable; sets disallow duplicates and are unordered."
+  },
+  {
+    "id": 5,
+    "module": "02_intro_programming",
+    "question": "Which OOP principle describes bundling data together with the methods that operate on it, while hiding internal details?",
+    "options": ["Inheritance", "Polymorphism", "Encapsulation", "Abstraction"],
+    "answer": 2,
+    "explanation": "Encapsulation bundles attributes and methods inside an object and restricts direct access to internal state."
+  },
+  {
+    "id": 6,
+    "module": "03_foundations_data_science",
+    "question": "What does SQL stand for, and what is its primary use?",
+    "options": [
+      "Structured Query Language — querying and managing relational databases",
+      "Simple Quick Lookup — searching unstructured text",
+      "System Query Logic — controlling operating system processes",
+      "Sequential Query Library — building web interfaces"
+    ],
+    "answer": 0,
+    "explanation": "SQL (Structured Query Language) is the standard language for creating, querying, and managing data in relational databases."
+  },
+  {
+    "id": 7,
+    "module": "03_foundations_data_science",
+    "question": "Which metric is used to evaluate a classification model rather than a regression model?",
+    "options": ["RMSE", "MAE", "AUC", "R²"],
+    "answer": 2,
+    "explanation": "AUC (Area Under the ROC Curve) is a classification metric. MAE, RMSE, and R² are regression metrics."
+  },
+  {
+    "id": 8,
+    "module": "03_foundations_data_science",
+    "question": "Which of these is an example of open data?",
+    "options": [
+      "A company's internal sales database",
+      "A government dataset published freely for public use",
+      "A hospital's patient records",
+      "Source code stored in a private Git repository"
+    ],
+    "answer": 1,
+    "explanation": "Open data is data that anyone can freely access, use, and redistribute — government-published datasets are a classic example."
+  },
+  {
+    "id": 9,
+    "module": "05_systems_analysis_design",
+    "question": "Which statement best describes a non-functional requirement?",
+    "options": [
+      "A description of a feature the system must implement",
+      "A quality or constraint such as performance, security, or availability",
+      "A use case diagram showing actor interactions",
+      "A class diagram describing system structure"
+    ],
+    "answer": 1,
+    "explanation": "Non-functional requirements describe how the system behaves — qualities and constraints — rather than what functions it performs."
+  },
+  {
+    "id": 10,
+    "module": "05_systems_analysis_design",
+    "question": "In a class diagram, which relationship represents a strong whole-part association where the part cannot exist independently of the whole?",
+    "options": ["Association", "Aggregation", "Composition", "Generalization"],
+    "answer": 2,
+    "explanation": "Composition is a strong form of aggregation — if the whole is destroyed, the parts cease to exist. Aggregation is weaker; parts can exist independently."
+  },
+  {
+    "id": 11,
+    "module": "06_lsep_data_science",
+    "question": "Which of the following is an example of academic misconduct?",
+    "options": [
+      "Citing a peer-reviewed paper in your references",
+      "Submitting work copied from another student as your own",
+      "Asking a lecturer to clarify an assignment brief",
+      "Using an approved calculator in an open-book assessment"
+    ],
+    "answer": 1,
+    "explanation": "Copying another student's work and submitting it as your own is plagiarism, a form of academic misconduct."
+  },
+  {
+    "id": 12,
+    "module": "06_lsep_data_science",
+    "question": "Under GDPR, which of the following is NOT a core principle of data processing?",
+    "options": [
+      "Data minimisation",
+      "Purpose limitation",
+      "Unlimited retention",
+      "Lawful processing"
+    ],
+    "answer": 2,
+    "explanation": "GDPR's storage limitation principle requires that personal data is not kept longer than necessary — the opposite of unlimited retention."
+  },
+  {
+    "id": 13,
+    "module": "06_lsep_data_science",
+    "question": "Which three terms best describe the core tenets of professionalism in data science?",
+    "options": [
+      "Speed, accuracy, automation",
+      "Competency, integrity, accountability",
+      "Innovation, disruption, scale",
+      "Secrecy, competition, profit"
+    ],
+    "answer": 1,
+    "explanation": "Competency, integrity, and accountability are the three core tenets of professional conduct emphasised in the module."
+  },
+  {
+    "id": 14,
+    "module": "07_advanced_systems_programming",
+    "question": "In software design, what is considered a hallmark of good modular code?",
+    "options": [
+      "High coupling and low cohesion",
+      "Low coupling and high cohesion",
+      "High coupling and high cohesion",
+      "Low coupling and low cohesion"
+    ],
+    "answer": 1,
+    "explanation": "Low coupling means modules depend on each other as little as possible; high cohesion means each module focuses on one clear responsibility. Both are desirable."
+  },
+  {
+    "id": 15,
+    "module": "07_advanced_systems_programming",
+    "question": "In the Model-View-Controller (MVC) pattern, what is the role of the Controller?",
+    "options": [
+      "Stores the application data and business rules",
+      "Renders the user interface to the screen",
+      "Handles user input and updates the model and view accordingly",
+      "Persists data to the database"
+    ],
+    "answer": 2,
+    "explanation": "The Controller handles user input, invokes operations on the Model, and determines which View to present. The Model holds data; the View renders it."
+  },
+  {
+    "id": 16,
+    "module": "08_interpreting_data",
+    "question": "In hypothesis testing, what is a Type I error?",
+    "options": [
+      "Failing to reject a false null hypothesis",
+      "Rejecting a true null hypothesis",
+      "Using a one-tailed test when a two-tailed test is needed",
+      "Sampling from the wrong population"
+    ],
+    "answer": 1,
+    "explanation": "A Type I error (false positive) occurs when we reject H₀ when it is actually true. A Type II error is failing to reject a false H₀."
+  },
+  {
+    "id": 17,
+    "module": "08_interpreting_data",
+    "question": "What is the main purpose of Principal Component Analysis (PCA)?",
+    "options": [
+      "To classify observations into categories",
+      "To reduce dimensionality by creating new uncorrelated components that capture most of the variation",
+      "To test whether group means are equal",
+      "To forecast future values in a time series"
+    ],
+    "answer": 1,
+    "explanation": "PCA creates new variables (principal components) that are linear combinations of the originals, ordered by the variance they explain. It is primarily a dimensionality reduction technique."
+  },
+  {
+    "id": 18,
+    "module": "09_project_management",
+    "question": "Which of the following best describes the initiating stage of project management?",
+    "options": [
+      "Carrying out the planned work and producing deliverables",
+      "Formally authorising the project and defining its high-level scope",
+      "Comparing actual progress against the baseline plan",
+      "Closing contracts and archiving project records"
+    ],
+    "answer": 1,
+    "explanation": "Initiating is the first process group — it authorises the project (typically via a project charter) and defines its high-level scope and objectives."
+  },
+  {
+    "id": 19,
+    "module": "09_project_management",
+    "question": "In a project schedule network, what is the critical path?",
+    "options": [
+      "The shortest chain of tasks from start to finish",
+      "The longest chain of dependent tasks, which determines the minimum project duration",
+      "Any task flagged as high-risk by the project manager",
+      "The set of tasks assigned to the most experienced team members"
+    ],
+    "answer": 1,
+    "explanation": "The critical path is the longest sequence of dependent activities. Its length determines the earliest possible project completion date; any delay on it delays the whole project."
+  },
+  {
+    "id": 20,
+    "module": "09_project_management",
+    "question": "In Earned Value Management, if EV is less than both PV and AC, the project is:",
+    "options": [
+      "Ahead of schedule and under budget",
+      "Behind schedule and over budget",
+      "On schedule but over budget",
+      "Ahead of schedule but over budget"
+    ],
+    "answer": 1,
+    "explanation": "EV < PV means less work has been completed than planned (behind schedule). EV < AC means more has been spent than the work is worth (over budget)."
+  },
+  {
+    "id": 21,
+    "module": "10_machine_learning",
+    "question": "An AUC value of 0.5 indicates that a classifier:",
+    "options": [
+      "Is perfect",
+      "Is performing no better than random guessing",
+      "Always predicts the negative class",
+      "Has zero false positives"
+    ],
+    "answer": 1,
+    "explanation": "AUC = 1.0 is a perfect classifier; AUC = 0.5 means the ranking is no better than chance. Values below 0.5 indicate worse-than-random (often an inverted model)."
+  },
+  {
+    "id": 22,
+    "module": "10_machine_learning",
+    "question": "Which clustering algorithm requires the number of clusters to be chosen in advance?",
+    "options": ["DBSCAN", "Hierarchical clustering (agglomerative)", "k-means", "Self-organising maps"],
+    "answer": 2,
+    "explanation": "k-means requires k to be specified before running. DBSCAN finds clusters based on density parameters, and hierarchical clustering produces a dendrogram the user can cut at any level."
+  },
+  {
+    "id": 23,
+    "module": "10_machine_learning",
+    "question": "What is overfitting in machine learning?",
+    "options": [
+      "When a model fits the training data too closely and performs poorly on unseen data",
+      "When a model is too simple to capture the underlying pattern",
+      "When training data contains duplicate records",
+      "When the test set is larger than the training set"
+    ],
+    "answer": 0,
+    "explanation": "Overfitting means the model has learned noise or idiosyncrasies of the training data and fails to generalise. Underfitting is the opposite — a model too simple for the task."
+  },
+  {
+    "id": 24,
+    "module": "11_information_security",
+    "question": "The CIA triad in information security stands for:",
+    "options": [
+      "Control, Integrity, Audit",
+      "Confidentiality, Integrity, Availability",
+      "Confidentiality, Identification, Authorisation",
+      "Compliance, Isolation, Access"
+    ],
+    "answer": 1,
+    "explanation": "The CIA triad is the foundation of information security: Confidentiality (only authorised parties can read), Integrity (data is accurate and unaltered), Availability (accessible when needed)."
+  },
+  {
+    "id": 25,
+    "module": "11_information_security",
+    "question": "Which of the following best describes phishing?",
+    "options": [
+      "A denial-of-service attack targeting web servers",
+      "A fraudulent attempt to obtain sensitive information by masquerading as a trusted entity",
+      "A brute-force attack against password hashes",
+      "A physical intrusion through an unlocked server room"
+    ],
+    "answer": 1,
+    "explanation": "Phishing uses deceptive communications (typically email) that appear to come from a trusted source, tricking victims into revealing credentials or other sensitive information."
+  },
+  {
+    "id": 26,
+    "module": "12_scalable_systems_databases",
+    "question": "Which two components are at the core of Apache Hadoop?",
+    "options": [
+      "MySQL and PHP",
+      "HDFS and MapReduce",
+      "Spark and Kafka",
+      "Redis and MongoDB"
+    ],
+    "answer": 1,
+    "explanation": "Hadoop's core consists of HDFS (the distributed file system) and MapReduce (the batch processing model). YARN was added later as a resource manager."
+  },
+  {
+    "id": 27,
+    "module": "12_scalable_systems_databases",
+    "question": "According to the CAP theorem, a distributed system can fully guarantee at most how many of: Consistency, Availability, Partition tolerance?",
+    "options": ["One", "Two", "Three", "It depends on network speed"],
+    "answer": 1,
+    "explanation": "CAP states that in the presence of a network partition, a distributed system can guarantee at most two of the three properties at once — typically you choose between consistency and availability."
+  },
+  {
+    "id": 28,
+    "module": "13_ai_for_data_science",
+    "question": "Which deep learning architecture is most commonly used for image recognition tasks?",
+    "options": [
+      "Recurrent Neural Network (RNN)",
+      "Support Vector Machine (SVM)",
+      "Convolutional Neural Network (CNN)",
+      "Decision Tree"
+    ],
+    "answer": 2,
+    "explanation": "CNNs exploit the spatial structure of images through convolutional filters and weight sharing, making them the dominant architecture for computer vision tasks."
+  },
+  {
+    "id": 29,
+    "module": "13_ai_for_data_science",
+    "question": "In the A* search algorithm, the evaluation function f(n) is defined as:",
+    "options": [
+      "f(n) = h(n) only",
+      "f(n) = g(n) only",
+      "f(n) = g(n) + h(n)",
+      "f(n) = g(n) × h(n)"
+    ],
+    "answer": 2,
+    "explanation": "A* combines g(n), the known cost from start to n, with h(n), the heuristic estimate from n to the goal. Greedy best-first search uses only h(n)."
+  },
+  {
+    "id": 30,
+    "module": "14_project_planning",
+    "question": "The SMART acronym for writing good project objectives stands for:",
+    "options": [
+      "Specific, Measurable, Achievable, Relevant, Time-bound",
+      "Simple, Modular, Actionable, Rapid, Tested",
+      "Strategic, Managed, Audited, Reviewed, Tracked",
+      "Scalable, Maintainable, Available, Reliable, Testable"
+    ],
+    "answer": 0,
+    "explanation": "SMART objectives are Specific, Measurable, Achievable, Relevant, and Time-bound — the standard criteria for well-written objectives."
+  }
+]
