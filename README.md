@@ -36,6 +36,9 @@ Open `mock_test/index.html` directly in a browser, or host the `mock_test/` dire
 - Questions are unique within a paper
 - Option order is shuffled per session
 - Session recovery uses `localStorage` with an absolute end timestamp
+- Untimed module practice can be launched from each cheatsheet using all questions tagged to that module
+- Module practice reveals correct/incorrect feedback and the explanation immediately after an answer is chosen
+- Timed mock state and module-practice state are saved separately, so both can coexist in one browser
 - Completed-paper review history is saved in browser `localStorage`
 - Saved history is browser-local on that device, not a shared multi-user account system
 - Cheatsheets can be opened during a live paper, but the timer does not pause

@@ -3,7 +3,8 @@
 
   const EXAM_DURATION_SECONDS = 60 * 60;
   const PAPER_SIZE = 30;
-  const SESSION_STORAGE_KEY = "ntu_epa_mock_test_session_v1";
+  const MOCK_SESSION_STORAGE_KEY = "ntu_epa_mock_test_session_v1";
+  const PRACTICE_SESSION_STORAGE_KEY = "ntu_epa_module_practice_session_v1";
   const SCORE_STORAGE_KEY = "ntu_epa_mock_test_score_v1";
   const RESULTS_STORAGE_KEY = "ntu_epa_mock_test_results_v1";
   const UI_STORAGE_KEY = "ntu_epa_mock_test_ui_v1";
@@ -18,7 +19,10 @@
     cheatsheets: [],
     moduleOrder: [],
     moduleTitles: {},
-    session: null,
+    moduleQuestionCounts: {},
+    mockSession: null,
+    practiceSession: null,
+    activeSessionMode: null,
     result: null,
     resultHistory: [],
     activeCheatsheet: null,
@@ -36,8 +40,9 @@
     state.cheatsheets = rawCheatsheets.filter((sheet) => !String(sheet.module || "").startsWith("04_"));
     state.moduleTitles = buildModuleTitles(state.cheatsheets, state.questionBank);
     state.moduleOrder = deriveModuleOrder(state.moduleTitles);
+    state.moduleQuestionCounts = buildModuleQuestionCounts(state.questionBank);
     state.activeCheatsheet = state.moduleOrder[0] || null;
-    state.lastScore = loadJson(SCORE_STORAGE_KEY);
+    state.lastScore = loadLastScore();
     state.resultHistory = loadResultHistory();
 
     if (!state.questionBank.length) {
@@ -52,13 +57,28 @@
       state.activeCheatsheet = savedUiState.activeCheatsheet;
     }
 
-    const savedSession = loadJson(SESSION_STORAGE_KEY);
-    if (isValidSession(savedSession)) {
-      state.session = savedSession;
-      if (getRemainingSeconds(savedSession) <= 0) {
-        submitSession({ autoSubmitted: true });
-        return;
-      }
+    state.mockSession = loadSavedSession("mock");
+    state.practiceSession = loadSavedSession("module-practice");
+
+    if (state.mockSession && getRemainingSeconds(state.mockSession) <= 0) {
+      state.activeSessionMode = "mock";
+      submitSession({ autoSubmitted: true, mode: "mock" });
+      return;
+    }
+
+    if (
+      savedUiState &&
+      isKnownSessionMode(savedUiState.activeSessionMode) &&
+      getSessionByMode(savedUiState.activeSessionMode)
+    ) {
+      state.activeSessionMode = savedUiState.activeSessionMode;
+    } else if (state.mockSession) {
+      state.activeSessionMode = "mock";
+    } else if (state.practiceSession) {
+      state.activeSessionMode = "module-practice";
+    }
+
+    if (state.mockSession || state.practiceSession) {
       state.view = savedUiState && savedUiState.view === "cheatsheets" ? "cheatsheets" : "quiz";
     } else if (savedUiState) {
       restoreSavedResult(savedUiState);
@@ -91,15 +111,22 @@
     }
 
     if (action === "start-test") {
-      startNewSession();
+      startMockSession();
       return;
     }
 
     if (action === "resume-test") {
-      if (state.session) {
-        state.view = "quiz";
-        render();
-      }
+      resumeSession("mock");
+      return;
+    }
+
+    if (action === "resume-module-practice") {
+      resumeSession("module-practice");
+      return;
+    }
+
+    if (action === "start-module-practice") {
+      startModulePractice(target.dataset.module || state.activeCheatsheet);
       return;
     }
 
@@ -111,8 +138,8 @@
       return;
     }
 
-    if (action === "abandon-test") {
-      abandonSession();
+    if (action === "abandon-session") {
+      abandonSession(target.dataset.mode || state.activeSessionMode);
       return;
     }
 
@@ -171,8 +198,7 @@
     }
 
     if (action === "new-from-results") {
-      state.result = null;
-      startNewSession();
+      restartResultSession();
       return;
     }
 
@@ -191,7 +217,8 @@
 
   function onChange(event) {
     const optionInput = event.target.closest("input[data-option-index]");
-    if (!optionInput || !state.session) {
+    const session = getActiveSession();
+    if (!optionInput || !session) {
       return;
     }
 
@@ -201,13 +228,25 @@
     }
 
     const optionIndex = Number(optionInput.dataset.optionIndex);
-    state.session.answers[question.id] = question.options[optionIndex];
-    persistSession();
+    if (session.mode === "module-practice" && session.revealed[question.id]) {
+      return;
+    }
+
+    session.answers[question.id] = question.options[optionIndex];
+    if (session.mode === "module-practice") {
+      session.revealed[question.id] = true;
+      persistSession(session.mode);
+      render();
+      return;
+    }
+
+    persistSession(session.mode);
     syncQuizSelectionUI();
   }
 
   function onKeydown(event) {
-    if (state.view !== "quiz" || !state.session) {
+    const session = getActiveSession();
+    if (state.view !== "quiz" || !session) {
       return;
     }
 
@@ -232,18 +271,28 @@
       const question = getCurrentQuestion();
       const optionIndex = Number(event.key) - 1;
       if (question && question.options[optionIndex]) {
-        state.session.answers[question.id] = question.options[optionIndex];
-        persistSession();
+        if (session.mode === "module-practice" && session.revealed[question.id]) {
+          return;
+        }
+        session.answers[question.id] = question.options[optionIndex];
+        if (session.mode === "module-practice") {
+          session.revealed[question.id] = true;
+          persistSession(session.mode);
+          render();
+          return;
+        }
+        persistSession(session.mode);
         syncQuizSelectionUI();
       }
     }
   }
 
-  function startNewSession() {
+  function startMockSession() {
     try {
       const selectedQuestions = generatePaper(state.questionBank, state.moduleOrder, PAPER_SIZE);
-      state.session = {
-        version: 1,
+      state.mockSession = {
+        version: 2,
+        mode: "mock",
         id: `session-${Date.now()}`,
         startedAt: Date.now(),
         endsAt: Date.now() + EXAM_DURATION_SECONDS * 1000,
@@ -251,76 +300,163 @@
         questions: selectedQuestions,
         answers: {},
         flagged: {},
+        revealed: {},
       };
+      state.activeSessionMode = "mock";
       state.result = null;
       state.view = "quiz";
-      persistSession();
+      persistSession("mock");
       render();
     } catch (error) {
       window.alert(error instanceof Error ? error.message : "Unable to start the mock test.");
     }
   }
 
-  function abandonSession() {
-    if (!state.session) {
+  function startModulePractice(module) {
+    if (!isKnownModule(module)) {
       return;
     }
 
-    if (!window.confirm("Abandon the current mock test? Progress will be lost.")) {
+    const existingPractice = state.practiceSession;
+    if (
+      existingPractice &&
+      existingPractice.module !== module &&
+      !window.confirm(
+        `Start ${moduleLabel(module)} practice? Your saved ${moduleLabel(existingPractice.module)} practice will be replaced.`
+      )
+    ) {
       return;
     }
 
-    stopTimer();
-    state.session = null;
-    removeStoredSession();
-    state.view = "home";
+    const moduleQuestions = state.questionBank.filter((question) => question.module === module);
+    if (!moduleQuestions.length) {
+      window.alert(`No questions are available for ${moduleLabel(module)}.`);
+      return;
+    }
+
+    state.practiceSession = {
+      version: 2,
+      mode: "module-practice",
+      module,
+      id: `practice-${Date.now()}`,
+      startedAt: Date.now(),
+      currentIndex: 0,
+      questions: prepareSessionQuestions(moduleQuestions),
+      answers: {},
+      flagged: {},
+      revealed: {},
+    };
+    state.activeSessionMode = "module-practice";
+    state.result = null;
+    state.view = "quiz";
+    persistSession("module-practice");
     render();
   }
 
-  function moveQuestion(delta) {
-    if (!state.session) {
+  function resumeSession(mode) {
+    const session = getSessionByMode(mode);
+    if (!session) {
       return;
     }
-    const nextIndex = clamp(state.session.currentIndex + delta, 0, state.session.questions.length - 1);
-    state.session.currentIndex = nextIndex;
-    persistSession();
+
+    if (mode === "mock" && getRemainingSeconds(session) <= 0) {
+      state.activeSessionMode = "mock";
+      submitSession({ autoSubmitted: true, mode: "mock" });
+      return;
+    }
+
+    state.activeSessionMode = mode;
+    state.view = "quiz";
+    render();
+  }
+
+  function abandonSession(mode) {
+    const session = getSessionByMode(mode);
+    if (!session) {
+      return;
+    }
+
+    const label = session.mode === "mock" ? "the current mock test" : `${moduleLabel(session.module)} module practice`;
+    if (!window.confirm(`Abandon ${label}? Progress will be lost.`)) {
+      return;
+    }
+
+    if (mode === "mock" && state.activeSessionMode === "mock") {
+      stopTimer();
+    }
+
+    setSessionByMode(mode, null);
+    removeStoredSession(mode);
+    if (state.activeSessionMode === mode) {
+      state.activeSessionMode = state.mockSession ? "mock" : state.practiceSession ? "module-practice" : null;
+      state.view = "home";
+    }
+    render();
+  }
+
+  function restartResultSession() {
+    if (!state.result) {
+      return;
+    }
+
+    const result = state.result;
+    state.result = null;
+    if (result.mode === "module-practice" && result.module) {
+      startModulePractice(result.module);
+      return;
+    }
+    startMockSession();
+  }
+
+  function moveQuestion(delta) {
+    const session = getActiveSession();
+    if (!session) {
+      return;
+    }
+    const nextIndex = clamp(session.currentIndex + delta, 0, session.questions.length - 1);
+    session.currentIndex = nextIndex;
+    persistSession(session.mode);
     render();
   }
 
   function setQuestionIndex(index) {
-    if (!state.session || Number.isNaN(index)) {
+    const session = getActiveSession();
+    if (!session || Number.isNaN(index)) {
       return;
     }
-    state.session.currentIndex = clamp(index, 0, state.session.questions.length - 1);
-    persistSession();
+    session.currentIndex = clamp(index, 0, session.questions.length - 1);
+    persistSession(session.mode);
     render();
   }
 
   function toggleFlag() {
-    if (!state.session) {
+    const session = getActiveSession();
+    if (!session) {
       return;
     }
     const question = getCurrentQuestion();
     if (!question) {
       return;
     }
-    if (state.session.flagged[question.id]) {
-      delete state.session.flagged[question.id];
+    if (session.flagged[question.id]) {
+      delete session.flagged[question.id];
     } else {
-      state.session.flagged[question.id] = true;
+      session.flagged[question.id] = true;
     }
-    persistSession();
+    persistSession(session.mode);
     render();
   }
 
-  function submitSession({ autoSubmitted }) {
-    if (!state.session) {
+  function submitSession({ autoSubmitted, mode }) {
+    const session = mode ? getSessionByMode(mode) : getActiveSession();
+    if (!session) {
       return;
     }
 
-    stopTimer();
+    if (session.mode === "mock") {
+      stopTimer();
+    }
 
-    const session = state.session;
     const reviewItems = session.questions.map((question, index) => {
       const chosenAnswer = session.answers[question.id] || null;
       return {
@@ -350,13 +486,15 @@
 
     const result = {
       id: `result-${session.id}`,
+      mode: session.mode,
+      module: session.mode === "module-practice" ? session.module : null,
       completedAt: Date.now(),
       autoSubmitted,
       startedAt: session.startedAt,
-      elapsedSeconds: Math.min(
-        EXAM_DURATION_SECONDS,
-        Math.max(0, Math.round((Math.min(session.endsAt, Date.now()) - session.startedAt) / 1000))
-      ),
+      elapsedSeconds:
+        session.mode === "mock"
+          ? Math.min(EXAM_DURATION_SECONDS, Math.max(0, Math.round((Math.min(session.endsAt, Date.now()) - session.startedAt) / 1000)))
+          : Math.max(0, Math.round((Date.now() - session.startedAt) / 1000)),
       score: correctCount,
       total: session.questions.length,
       percentage: Math.round((correctCount / session.questions.length) * 100),
@@ -368,6 +506,8 @@
     };
 
     state.lastScore = {
+      mode: result.mode,
+      module: result.module,
       completedAt: result.completedAt,
       score: result.score,
       total: result.total,
@@ -376,10 +516,13 @@
     saveJson(SCORE_STORAGE_KEY, state.lastScore);
     saveCompletedResult(result);
 
-    state.session = null;
+    setSessionByMode(session.mode, null);
+    if (state.activeSessionMode === session.mode) {
+      state.activeSessionMode = state.mockSession ? "mock" : state.practiceSession ? "module-practice" : null;
+    }
     state.result = result;
     state.view = "results";
-    removeStoredSession();
+    removeStoredSession(session.mode);
     render();
   }
 
@@ -387,8 +530,13 @@
     renderHeaderActions();
     persistUiState();
 
-    if (state.view === "quiz" && state.session) {
-      startTimer();
+    if (state.view === "quiz" && getActiveSession()) {
+      const session = getActiveSession();
+      if (session && session.mode === "mock") {
+        startTimer();
+      } else {
+        stopTimer();
+      }
       renderQuiz();
       return;
     }
@@ -410,19 +558,49 @@
 
   function renderHeaderActions() {
     const actions = [];
+    const activeSession = getActiveSession();
 
     actions.push(buttonHtml("Home", "btn btn-ghost", "home"));
 
-    if (state.session) {
-      actions.push(buttonHtml("Cheatsheets", "btn btn-secondary", "view-cheatsheets"));
-      actions.push(buttonHtml("Resume Test", "btn btn-primary", "resume-test"));
-      actions.push(buttonHtml("Abandon Test", "btn btn-ghost", "abandon-test"));
+    if (state.result && state.view !== "results") {
+      actions.push(buttonHtml("Return to Review", "btn btn-secondary", "resume-review"));
+    }
+
+    actions.push(buttonHtml("Cheatsheets", "btn btn-secondary", "view-cheatsheets"));
+
+    if (state.mockSession) {
+      actions.push(
+        buttonHtml(
+          state.activeSessionMode === "mock" && state.view === "quiz" ? "Mock Test Open" : "Resume Mock Test",
+          state.activeSessionMode === "mock" && state.view === "quiz" ? "btn btn-primary" : "btn btn-secondary",
+          "resume-test"
+        )
+      );
     } else {
-      if (state.result && state.view !== "results") {
-        actions.push(buttonHtml("Return to Review", "btn btn-secondary", "resume-review"));
-      }
-      actions.push(buttonHtml("Cheatsheets", "btn btn-secondary", "view-cheatsheets"));
       actions.push(buttonHtml("New Mock Test", "btn btn-primary", "start-test"));
+    }
+
+    if (state.practiceSession) {
+      actions.push(
+        buttonHtml(
+          state.activeSessionMode === "module-practice" && state.view === "quiz"
+            ? "Module Practice Open"
+            : "Resume Module Practice",
+          state.activeSessionMode === "module-practice" && state.view === "quiz" ? "btn btn-primary" : "btn btn-secondary",
+          "resume-module-practice"
+        )
+      );
+    }
+
+    if (activeSession) {
+      actions.push(
+        buttonHtml(
+          activeSession.mode === "mock" ? "Abandon Mock Test" : "Abandon Practice",
+          "btn btn-ghost",
+          "abandon-session",
+          ` data-mode="${escapeHtml(activeSession.mode)}"`
+        )
+      );
     }
 
     headerActions.innerHTML = actions.join("");
@@ -430,13 +608,25 @@
 
   function renderHome() {
     const canStartTest = state.questionBank.length >= PAPER_SIZE;
-    const activeSessionBanner = state.session
+    const mockSessionBanner = state.mockSession
       ? `
         <div class="warning-banner card">
           <strong>Test in progress.</strong>
           <div class="action-row">
             ${buttonHtml("Resume Timed Test", "btn btn-primary", "resume-test")}
-            ${buttonHtml("Abandon Session", "btn btn-ghost", "abandon-test")}
+            ${buttonHtml("Abandon Session", "btn btn-ghost", "abandon-session", ' data-mode="mock"')}
+          </div>
+        </div>
+      `
+      : "";
+
+    const practiceSessionBanner = state.practiceSession
+      ? `
+        <div class="score-banner card">
+          <strong>${escapeHtml(`${moduleLabel(state.practiceSession.module)} practice saved.`)}</strong>
+          <div class="action-row">
+            ${buttonHtml("Resume Module Practice", "btn btn-primary", "resume-module-practice")}
+            ${buttonHtml("Abandon Practice", "btn btn-ghost", "abandon-session", ' data-mode="module-practice"')}
           </div>
         </div>
       `
@@ -445,9 +635,9 @@
     const lastScoreBanner = state.lastScore
       ? `
         <div class="score-banner card">
-          <strong>Last completed paper:</strong>
+          <strong>Last completed attempt:</strong>
           ${escapeHtml(
-            `${state.lastScore.score}/${state.lastScore.total} (${state.lastScore.percentage}%) on ${formatDateTime(
+            `${resultDisplayName(state.lastScore)} · ${state.lastScore.score}/${state.lastScore.total} (${state.lastScore.percentage}%) on ${formatDateTime(
               state.lastScore.completedAt
             )}`
           )}
@@ -457,11 +647,11 @@
 
     const historySection = state.resultHistory.length
       ? `
-        <section class="card panel">
+                <section class="card panel">
           <div class="history-heading">
             <div>
               <p class="eyebrow">Saved locally</p>
-              <h2>Recent Papers</h2>
+              <h2>Recent Attempts</h2>
             </div>
             <p class="muted-copy">Attempts stay in this browser so you can reopen the review page later.</p>
           </div>
@@ -472,7 +662,7 @@
                 (result) => `
                   <div class="history-row">
                     <div class="history-copy">
-                      <strong>${escapeHtml(`${result.score}/${result.total} (${result.percentage}%)`)}</strong>
+                      <strong>${escapeHtml(`${resultDisplayName(result)} · ${result.score}/${result.total} (${result.percentage}%)`)}</strong>
                       <span>${escapeHtml(`${formatDateTime(result.completedAt)} · ${formatDuration(result.elapsedSeconds)} used`)}</span>
                     </div>
                     ${buttonHtml(
@@ -500,7 +690,8 @@
       : "";
 
     appRoot.innerHTML = `
-      ${activeSessionBanner}
+      ${mockSessionBanner}
+      ${practiceSessionBanner}
       ${lastScoreBanner}
       ${dataWarningBanner}
       <section class="hero card">
@@ -509,7 +700,8 @@
           <h2>Practice the NTU Data Scientist EPA knowledge test with a timed 30-question paper.</h2>
           <p>
             This static app uses the completed 302-question bank across the 13 in-scope modules. The mock paper is timed,
-            closed-book in spirit, and designed for direct local use or GitHub Pages sharing.
+            closed-book in spirit, and designed for direct local use or GitHub Pages sharing. Each cheatsheet also opens an
+            untimed module-practice run using every question tagged to that module.
           </p>
           <div class="pill-row">
             <span class="pill">30 questions</span>
@@ -519,15 +711,15 @@
           </div>
           <div class="hero-actions">
             ${buttonHtml(
-              state.session ? "Resume Mock Test" : "Start Mock Test",
+              state.mockSession ? "Resume Mock Test" : "Start Mock Test",
               "btn btn-primary",
-              state.session ? "resume-test" : "start-test",
-              !state.session && !canStartTest ? " disabled" : ""
+              state.mockSession ? "resume-test" : "start-test",
+              !state.mockSession && !canStartTest ? " disabled" : ""
             )}
             ${buttonHtml("Browse Cheatsheets", "btn btn-secondary", "view-cheatsheets")}
           </div>
           <p class="footer-note">
-            The timer keeps running if you open cheatsheets during a live paper. Your test and review screens stay restorable in this browser.
+            Timed mock sessions and untimed module-practice sessions are saved separately in this browser.
           </p>
         </div>
         <div class="stat-grid">
@@ -554,24 +746,58 @@
   }
 
   function renderQuiz() {
+    const session = getActiveSession();
     const question = getCurrentQuestion();
-    if (!question) {
+    if (!session || !question) {
       renderFatal("The active session could not be loaded.");
       return;
     }
 
-    const answeredCount = Object.keys(state.session.answers).length;
-    const flaggedCount = Object.keys(state.session.flagged).length;
+    const answeredCount = Object.keys(session.answers).length;
+    const flaggedCount = Object.keys(session.flagged).length;
     const unansweredCount = getUnansweredCount();
-    const remainingSeconds = getRemainingSeconds(state.session);
-    const remainingLabel = formatDuration(remainingSeconds);
-    const isUrgent = remainingSeconds <= 5 * 60;
+    const remainingSeconds = session.mode === "mock" ? getRemainingSeconds(session) : 0;
+    const remainingLabel = session.mode === "mock" ? formatDuration(remainingSeconds) : "Untimed";
+    const isUrgent = session.mode === "mock" && remainingSeconds <= 5 * 60;
+    const statusLabel = session.mode === "mock" ? "Timed Mock Test" : `${moduleLabel(session.module)} Practice`;
+    const statusNote =
+      session.mode === "mock"
+        ? "Arrow keys navigate. Keys 1-4 select."
+        : "Untimed practice. Answers save locally in this browser.";
+    const isPracticeRevealed = session.mode === "module-practice" && Boolean(session.revealed[question.id]);
+    const selectedAnswer = session.answers[question.id] || null;
+    const practiceExplanation =
+      session.mode === "module-practice" && isPracticeRevealed
+        ? `
+          <div class="review-explanation inline-feedback">
+            <strong>${escapeHtml(selectedAnswer === question.answer ? "Correct" : "Incorrect")}</strong>
+            <p><strong>Answer:</strong> ${escapeHtml(question.answer)}</p>
+            <p>${escapeHtml(question.explanation)}</p>
+          </div>
+        `
+        : session.mode === "module-practice"
+        ? `
+          <div class="notice inline-feedback">
+            Choose an answer to reveal the result and explanation straight away.
+          </div>
+        `
+        : "";
 
     const optionsHtml = question.options
       .map((option, index) => {
-        const isSelected = state.session.answers[question.id] === option;
+        const isSelected = selectedAnswer === option;
+        const classes = ["option-card"];
+        if (isSelected) {
+          classes.push("is-selected");
+        }
+        if (isPracticeRevealed && option === question.answer) {
+          classes.push("is-correct");
+        }
+        if (isPracticeRevealed && isSelected && option !== question.answer) {
+          classes.push("is-incorrect");
+        }
         return `
-          <label class="option-card${isSelected ? " is-selected" : ""}">
+          <label class="${classes.join(" ")}">
             <span class="option-letter">${String.fromCharCode(65 + index)}</span>
             <span>
               <input
@@ -579,6 +805,7 @@
                 name="question-${escapeHtml(question.id)}"
                 data-option-index="${index}"
                 ${isSelected ? "checked" : ""}
+                ${isPracticeRevealed ? "disabled" : ""}
               >
               ${escapeHtml(option)}
             </span>
@@ -587,13 +814,13 @@
       })
       .join("");
 
-    const paletteHtml = state.session.questions
+    const paletteHtml = session.questions
       .map((item, index) => {
         const classes = [
           "palette-button",
-          index === state.session.currentIndex ? "is-current" : "",
-          state.session.answers[item.id] ? "is-answered" : "",
-          state.session.flagged[item.id] ? "is-flagged" : "",
+          index === session.currentIndex ? "is-current" : "",
+          session.answers[item.id] ? "is-answered" : "",
+          session.flagged[item.id] ? "is-flagged" : "",
         ]
           .filter(Boolean)
           .join(" ");
@@ -612,46 +839,51 @@
           <div class="question-meta">
             <div>
               <p class="eyebrow">${escapeHtml(moduleLabel(question.module))}</p>
-              <h2>Question ${state.session.currentIndex + 1} of ${state.session.questions.length}</h2>
+              <h2>Question ${session.currentIndex + 1} of ${session.questions.length}</h2>
             </div>
             <div>
               <div class="timer${isUrgent ? " is-urgent" : ""}" id="timer" aria-live="off">${remainingLabel}</div>
-              <div class="footer-note">Arrow keys navigate. Keys 1-4 select.</div>
+              <div class="footer-note">${escapeHtml(statusNote)}</div>
             </div>
           </div>
 
           <p class="question-text">${escapeHtml(question.question)}</p>
           <div class="options">${optionsHtml}</div>
+          ${practiceExplanation}
 
           <div class="question-controls">
             <div class="action-row">
-              ${buttonHtml("Previous", "btn btn-ghost", "prev-question", state.session.currentIndex === 0 ? " disabled" : "")}
-              ${buttonHtml(state.session.flagged[question.id] ? "Unflag" : "Flag", "btn btn-secondary", "toggle-flag")}
+              ${buttonHtml("Previous", "btn btn-ghost", "prev-question", session.currentIndex === 0 ? " disabled" : "")}
+              ${buttonHtml(session.flagged[question.id] ? "Unflag" : "Flag", "btn btn-secondary", "toggle-flag")}
               ${buttonHtml(
-                state.session.currentIndex === state.session.questions.length - 1 ? "At Final Question" : "Next",
+                session.currentIndex === session.questions.length - 1 ? "At Final Question" : "Next",
                 "btn btn-ghost",
                 "next-question",
-                state.session.currentIndex === state.session.questions.length - 1 ? " disabled" : ""
+                session.currentIndex === session.questions.length - 1 ? " disabled" : ""
               )}
             </div>
-            ${buttonHtml("Submit Test", "btn btn-danger", "submit-test")}
+            ${buttonHtml(session.mode === "mock" ? "Submit Test" : "Finish Practice", "btn btn-danger", "submit-test")}
           </div>
         </div>
 
         <aside class="card panel">
-          <h2>Session Status</h2>
+          <h2>${escapeHtml(statusLabel)}</h2>
           <div class="meta-list">
             <div class="meta-row"><span>Answered</span><strong id="answered-count">${answeredCount}</strong></div>
             <div class="meta-row"><span>Unanswered</span><strong id="unanswered-count">${unansweredCount}</strong></div>
             <div class="meta-row"><span>Flagged</span><strong id="flagged-count">${flaggedCount}</strong></div>
-            <div class="meta-row"><span>Time left</span><strong id="time-left-copy">${remainingLabel}</strong></div>
+            <div class="meta-row"><span>${session.mode === "mock" ? "Time left" : "Mode"}</span><strong id="time-left-copy">${escapeHtml(remainingLabel)}</strong></div>
           </div>
 
           <h3>Question Map</h3>
           <div class="question-grid" id="question-palette">${paletteHtml}</div>
 
           <div class="notice" style="margin-top: 18px;">
-            Unanswered questions count as incorrect on submission. Opening a cheatsheet does not pause the timer.
+            ${
+              session.mode === "mock"
+                ? "Unanswered questions count as incorrect on submission. Opening a cheatsheet does not pause the timer."
+                : "Module practice is untimed, gives instant feedback, and stays separate from any live mock test."
+            }
           </div>
 
           <div class="action-row">
@@ -670,6 +902,7 @@
   function renderResults() {
     const result = state.result;
     const reviewItem = result.items[result.reviewIndex] || result.items[0];
+    const resultName = resultDisplayName(result);
     const moduleRows = result.moduleBreakdown
       .map(
         (row) => `
@@ -720,7 +953,7 @@
     appRoot.innerHTML = `
       <section class="results-layout">
         <div class="card panel">
-          <h2>Results</h2>
+          <h2>${escapeHtml(resultName)} Results</h2>
           <div class="summary-grid">
             <div class="summary-card">
               <strong>${result.score}/${result.total}</strong>
@@ -741,12 +974,18 @@
           </div>
 
           <div class="notice" style="margin-top: 18px;">
-            ${result.autoSubmitted ? "The paper auto-submitted when the timer reached 0:00." : "The paper was submitted manually."}
+            ${
+              result.mode === "mock"
+                ? result.autoSubmitted
+                  ? "The paper auto-submitted when the timer reached 0:00."
+                  : "The paper was submitted manually."
+                : "This untimed module practice was finished manually."
+            }
             Unanswered: ${result.unansweredCount}.
           </div>
 
           <div class="action-row">
-            ${buttonHtml("Start New Paper", "btn btn-primary", "new-from-results")}
+            ${buttonHtml(result.mode === "mock" ? "Start New Paper" : "Restart Module Practice", "btn btn-primary", "new-from-results")}
             ${buttonHtml("View Cheatsheets", "btn btn-secondary", "view-cheatsheets")}
             ${buttonHtml(
               "Open Current Module Cheatsheet",
@@ -793,27 +1032,65 @@
 
   function renderCheatsheets() {
     const cheatsheet = state.cheatsheets.find((sheet) => sheet.module === state.activeCheatsheet) || state.cheatsheets[0];
-    const returnBanner = state.session
-      ? `
-        <div class="notice reference-banner">
-          <strong>Timed paper still running.</strong>
-          The timer has not been paused.
-          <div class="action-row">
-            ${buttonHtml("Resume Test", "btn btn-primary", "resume-test")}
+    const questionCount = getModuleQuestionCount(cheatsheet.module);
+    const hasSavedPractice = Boolean(state.practiceSession);
+    const isCurrentPracticeModule = hasSavedPractice && state.practiceSession.module === cheatsheet.module;
+    const practiceButtons = isCurrentPracticeModule
+      ? buttonHtml("Resume Module Practice", "btn btn-primary", "resume-module-practice")
+      : hasSavedPractice
+      ? [
+          buttonHtml("Resume Saved Practice", "btn btn-secondary", "resume-module-practice"),
+          buttonHtml(
+            `Start ${escapeHtml(moduleLabel(cheatsheet.module))} Practice`,
+            "btn btn-primary",
+            "start-module-practice",
+            ` data-module="${escapeHtml(cheatsheet.module)}"`
+          ),
+        ].join("")
+      : buttonHtml(
+          "Start Untimed Module Practice",
+          "btn btn-primary",
+          "start-module-practice",
+          ` data-module="${escapeHtml(cheatsheet.module)}"`
+        );
+
+    const returnBanners = [
+      state.mockSession
+        ? `
+          <div class="notice reference-banner">
+            <strong>Timed mock still running.</strong>
+            Its timer is still based on the saved end time.
+            <div class="action-row">
+              ${buttonHtml("Resume Mock Test", "btn btn-primary", "resume-test")}
+            </div>
           </div>
-        </div>
-      `
-      : state.result
+        `
+        : "",
+      state.practiceSession
+        ? `
+          <div class="notice reference-banner">
+            <strong>${escapeHtml(`${moduleLabel(state.practiceSession.module)} practice saved.`)}</strong>
+            Module practice is stored separately from the timed mock.
+            <div class="action-row">
+              ${buttonHtml("Resume Module Practice", "btn btn-primary", "resume-module-practice")}
+            </div>
+          </div>
+        `
+        : "",
+      !state.mockSession && !state.practiceSession && state.result
       ? `
         <div class="notice reference-banner">
           <strong>Review remains available.</strong>
-          This completed paper is saved locally and can be reopened.
+          This completed attempt is saved locally and can be reopened.
           <div class="action-row">
             ${buttonHtml("Return to Review", "btn btn-primary", "resume-review")}
           </div>
         </div>
       `
-      : "";
+      : "",
+    ]
+      .filter(Boolean)
+      .join("");
     const moduleButtons = state.cheatsheets
       .map(
         (sheet) => `
@@ -832,13 +1109,22 @@
       <section class="cheatsheet-layout">
         <aside class="card panel">
           <h2>Cheatsheets</h2>
-          <p class="muted-copy">Revision content stays available before, during, or after a mock test.</p>
-          ${returnBanner}
+          <p class="muted-copy">Revision content stays available before, during, or after a mock test or module-practice run.</p>
+          ${returnBanners}
           <div class="review-list">${moduleButtons}</div>
         </aside>
 
         <article class="card panel">
           <p class="eyebrow">${escapeHtml(moduleLabel(cheatsheet.module))}</p>
+          <section class="practice-callout">
+            <div class="practice-callout-copy">
+              <strong>${escapeHtml(`${questionCount} question${questionCount === 1 ? "" : "s"}`)}</strong>
+              <p>Work through every question tagged to this module in untimed practice mode.</p>
+            </div>
+            <div class="action-row">
+              ${practiceButtons}
+            </div>
+          </section>
           <div class="markdown-content">${renderMarkdown(cheatsheet.markdown)}</div>
         </article>
       </section>
@@ -907,7 +1193,11 @@
       throw new Error(`Only ${selected.length} unique questions could be assembled for a ${size}-question paper.`);
     }
 
-    return shuffleArray(selected).map((question) => ({
+    return prepareSessionQuestions(selected);
+  }
+
+  function prepareSessionQuestions(questions) {
+    return shuffleArray(questions).map((question) => ({
       id: question.id,
       module: question.module,
       question: question.question,
@@ -1097,7 +1387,8 @@
   }
 
   function syncQuizSelectionUI() {
-    if (state.view !== "quiz" || !state.session) {
+    const session = getActiveSession();
+    if (state.view !== "quiz" || !session) {
       return;
     }
 
@@ -1106,7 +1397,7 @@
       return;
     }
 
-    const selectedAnswer = state.session.answers[question.id] || null;
+    const selectedAnswer = session.answers[question.id] || null;
     const optionCards = appRoot.querySelectorAll(".option-card");
     optionCards.forEach((card, index) => {
       const isSelected = question.options[index] === selectedAnswer;
@@ -1123,13 +1414,13 @@
     const currentPaletteButton = appRoot.querySelector(".palette-button.is-current");
 
     if (answeredCountNode) {
-      answeredCountNode.textContent = String(Object.keys(state.session.answers).length);
+      answeredCountNode.textContent = String(Object.keys(session.answers).length);
     }
     if (unansweredCountNode) {
       unansweredCountNode.textContent = String(getUnansweredCount());
     }
     if (flaggedCountNode) {
-      flaggedCountNode.textContent = String(Object.keys(state.session.flagged).length);
+      flaggedCountNode.textContent = String(Object.keys(session.flagged).length);
     }
     if (currentPaletteButton) {
       currentPaletteButton.classList.toggle("is-answered", Boolean(selectedAnswer));
@@ -1137,7 +1428,8 @@
   }
 
   function getCurrentQuestion() {
-    return state.session ? state.session.questions[state.session.currentIndex] : null;
+    const session = getActiveSession();
+    return session ? session.questions[session.currentIndex] : null;
   }
 
   function getRemainingSeconds(session) {
@@ -1145,22 +1437,25 @@
   }
 
   function getUnansweredCount() {
-    if (!state.session) {
+    const session = getActiveSession();
+    if (!session) {
       return 0;
     }
-    return state.session.questions.filter((question) => !state.session.answers[question.id]).length;
+    return session.questions.filter((question) => !session.answers[question.id]).length;
   }
 
   function startTimer() {
-    if (state.timerHandle || !state.session) {
+    const session = getActiveSession();
+    if (state.timerHandle || !session || session.mode !== "mock") {
       return;
     }
     state.timerHandle = window.setInterval(() => {
-      if (!state.session) {
+      const activeSession = getActiveSession();
+      if (!activeSession || activeSession.mode !== "mock") {
         stopTimer();
         return;
       }
-      const remainingSeconds = getRemainingSeconds(state.session);
+      const remainingSeconds = getRemainingSeconds(activeSession);
       const timerNode = document.getElementById("timer");
       const timeCopyNode = document.getElementById("time-left-copy");
       if (timerNode) {
@@ -1171,7 +1466,7 @@
         timeCopyNode.textContent = formatDuration(remainingSeconds);
       }
       if (remainingSeconds <= 0) {
-        submitSession({ autoSubmitted: true });
+        submitSession({ autoSubmitted: true, mode: "mock" });
       }
     }, 1000);
   }
@@ -1183,14 +1478,15 @@
     }
   }
 
-  function persistSession() {
-    if (state.session) {
-      saveJson(SESSION_STORAGE_KEY, state.session);
+  function persistSession(mode) {
+    const session = getSessionByMode(mode);
+    if (session) {
+      saveJson(getSessionStorageKey(mode), session);
     }
   }
 
-  function removeStoredSession() {
-    window.localStorage.removeItem(SESSION_STORAGE_KEY);
+  function removeStoredSession(mode) {
+    window.localStorage.removeItem(getSessionStorageKey(mode));
   }
 
   function restoreSavedResult(savedUiState) {
@@ -1227,6 +1523,7 @@
       activeCheatsheet: state.activeCheatsheet,
       activeResultId: state.result ? state.result.id : null,
       reviewIndex: state.result ? state.result.reviewIndex : 0,
+      activeSessionMode: state.activeSessionMode,
     });
 
     if (state.resultHistory.length) {
@@ -1244,7 +1541,7 @@
     if (!Array.isArray(saved)) {
       return [];
     }
-    return saved.filter(isValidResult).slice(0, MAX_RESULT_HISTORY);
+    return saved.map(normalizeResult).filter(isValidResult).slice(0, MAX_RESULT_HISTORY);
   }
 
   function buildModuleTitles(cheatsheets, questionBank) {
@@ -1272,8 +1569,52 @@
     return state.moduleTitles[module] || titleFromModule(module);
   }
 
+  function buildModuleQuestionCounts(questionBank) {
+    const counts = {};
+    for (const question of questionBank) {
+      counts[question.module] = (counts[question.module] || 0) + 1;
+    }
+    return counts;
+  }
+
+  function getModuleQuestionCount(module) {
+    return state.moduleQuestionCounts[module] || 0;
+  }
+
   function isKnownModule(module) {
     return typeof module === "string" && state.moduleOrder.includes(module);
+  }
+
+  function isKnownSessionMode(mode) {
+    return mode === "mock" || mode === "module-practice";
+  }
+
+  function getSessionStorageKey(mode) {
+    return mode === "mock" ? MOCK_SESSION_STORAGE_KEY : PRACTICE_SESSION_STORAGE_KEY;
+  }
+
+  function getSessionByMode(mode) {
+    if (mode === "mock") {
+      return state.mockSession;
+    }
+    if (mode === "module-practice") {
+      return state.practiceSession;
+    }
+    return null;
+  }
+
+  function setSessionByMode(mode, session) {
+    if (mode === "mock") {
+      state.mockSession = session;
+      return;
+    }
+    if (mode === "module-practice") {
+      state.practiceSession = session;
+    }
+  }
+
+  function getActiveSession() {
+    return getSessionByMode(state.activeSessionMode);
   }
 
   function titleFromModule(module) {
@@ -1284,28 +1625,88 @@
       .join(" ");
   }
 
-  function isValidSession(session) {
+  function loadSavedSession(mode) {
+    const saved = loadJson(getSessionStorageKey(mode));
+    const normalized = normalizeSession(saved, mode);
+    return isValidSession(normalized, mode) ? normalized : null;
+  }
+
+  function normalizeSession(session, fallbackMode) {
+    if (!session || typeof session !== "object") {
+      return null;
+    }
+
+    return {
+      ...session,
+      version: session.version === 2 ? 2 : 1,
+      mode: session.mode || fallbackMode,
+      module: session.module || null,
+      answers: session.answers && typeof session.answers === "object" ? session.answers : {},
+      flagged: session.flagged && typeof session.flagged === "object" ? session.flagged : {},
+      revealed: session.revealed && typeof session.revealed === "object" ? session.revealed : {},
+    };
+  }
+
+  function isValidSession(session, expectedMode) {
     return Boolean(
       session &&
-        session.version === 1 &&
+        (session.version === 1 || session.version === 2) &&
+        session.mode === expectedMode &&
         Array.isArray(session.questions) &&
         typeof session.currentIndex === "number" &&
-        session.endsAt &&
+        session.startedAt &&
+        (expectedMode === "mock" ? session.endsAt : true) &&
+        (expectedMode === "module-practice" ? typeof session.module === "string" : true) &&
         session.startedAt &&
         session.answers &&
-        session.flagged
-    );
+        session.flagged &&
+        session.revealed
+      );
+  }
+
+  function normalizeResult(result) {
+    if (!result || typeof result !== "object") {
+      return null;
+    }
+
+    return {
+      ...result,
+      mode: result.mode || "mock",
+      module: result.module || null,
+    };
   }
 
   function isValidResult(result) {
     return Boolean(
       result &&
         typeof result.id === "string" &&
+        isKnownSessionMode(result.mode) &&
         Array.isArray(result.items) &&
         typeof result.score === "number" &&
         typeof result.total === "number" &&
         typeof result.completedAt === "number"
     );
+  }
+
+  function loadLastScore() {
+    const saved = loadJson(SCORE_STORAGE_KEY);
+    if (!saved || typeof saved !== "object") {
+      return null;
+    }
+    return {
+      ...saved,
+      mode: saved.mode || "mock",
+      module: saved.module || null,
+    };
+  }
+
+  function resultDisplayName(result) {
+    if (!result) {
+      return "Attempt";
+    }
+    return result.mode === "module-practice" && result.module
+      ? `${moduleLabel(result.module)} Practice`
+      : "Timed Mock Test";
   }
 
   function buttonHtml(label, className, action, extraAttributes) {
